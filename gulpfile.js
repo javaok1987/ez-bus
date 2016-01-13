@@ -45,14 +45,19 @@ gulp.task('sass', function() {
   gulp.src(config.stylePath + 'main.scss')
     .pipe(plugins.sass.sync())
     .pipe(gulp.dest(config.appPath + 'css/'))
-    .pipe(plugins.sass.sync({
-      outputStyle: 'compressed'
-    }))
-    .pipe(plugins.rename({
-      suffix: '.min'
-    }))
+    .pipe(plugins.cssnano())
+    .pipe(plugins.rename({suffix: '.min'}))
     .pipe(gulp.dest(config.appPath + 'css/'))
     .pipe(plugins.connect.reload());
+});
+
+gulp.task('cssnano', function() {
+    return gulp.src(config.appPath + 'css/main.css')
+        .pipe(plugins.cssnano())
+        .pipe(plugins.rename({
+      suffix: '.cssnano'
+    }))
+        .pipe(gulp.dest(config.appPath + 'css/'));
 });
 
 // Watch Task.

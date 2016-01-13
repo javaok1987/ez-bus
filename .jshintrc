@@ -117,7 +117,10 @@
 	//"anotherCoolGlobal",
 	//"iLoveDouglas"
 	"google",
-	"classie"
+	"classie",
+	"Chart",
+	"GMap",
+	"swal"
 	]
 	//,	"indent" : 2 // Specify indentation spacing
 }

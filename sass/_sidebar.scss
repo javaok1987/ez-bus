@@ -2,12 +2,13 @@
 
 #sidebar-wrapper
 {
+
     position: fixed;
     z-index: 1000;
     top: 0;
     right: 0;
 
-    overflow-y: auto;
+    overflow-y: hidden;
 
     width: $panel-width;
     height: 100%;
@@ -38,15 +39,14 @@
 .sidebar-panel
 {
     border-top: 5px solid #ecf0f1;
-    position: fixed;
-    z-index: 1;
-    top: 30%;
+    // position: fixed;
+    top: 300px;
 
     overflow-x: hidden;
     overflow-y: auto;
 
     width: $panel-width;
-    height: 70%;
+    // height: 70%;
     // background-color: $inverse;
     .items
     {
