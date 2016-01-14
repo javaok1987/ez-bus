@@ -212,14 +212,14 @@ String.prototype.repeat = function(num) {
 
 (function($) {
 
-  var $slider = $('#slider'),
-    $walkSlider = $('#walk-slider'),
-    $select = {
-      fromtime: $('#select-form-time'),
-    },
-    $conveyance = $('#article-conveyance'),
-    $wrapper = $('#wrapper'),
-    $footer = $('#footer');
+  var $slider = $('#slider');
+  var $walkSlider = $('#walk-slider');
+  var $select = {
+    fromtime: $('#select-form-time')
+  };
+  var $conveyance = $('#article-conveyance');
+  var $wrapper = $('#wrapper');
+  var $footer = $('#footer');
 
 
   jQuery(function($) {
