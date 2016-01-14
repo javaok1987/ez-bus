@@ -2,7 +2,6 @@
 
 #sidebar-wrapper
 {
-
     position: fixed;
     z-index: 1000;
     top: 0;
@@ -38,7 +37,6 @@
 
 .sidebar-panel
 {
-    border-top: 5px solid #ecf0f1;
     // position: fixed;
     top: 300px;
 
@@ -46,6 +44,8 @@
     overflow-y: auto;
 
     width: $panel-width;
+
+    border-top: 5px solid #ecf0f1;
     // height: 70%;
     // background-color: $inverse;
     .items
@@ -72,7 +72,8 @@
     .share
     {
         border-radius: 0;
-        .btn-large{
+        .btn-large
+        {
             border-radius: 0;
         }
     }
@@ -84,6 +85,10 @@
     z-index: 9;
     top: 0;
     right: 0;
+}
+#menu-toggle:hover
+{
+    color: #7f8c8d;
 }
 
 #article-conveyance

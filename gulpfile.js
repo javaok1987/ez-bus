@@ -1,6 +1,5 @@
 //Modules
 var del = require('del');
-var fs = require('fs');
 
 //gulp.js plugin registry.
 var gulp = require('gulp');

@@ -34,14 +34,17 @@
 
     $conveyance.find('[data-toggle="checkbox"]').on('change.radiocheck', function(ele) {
       var $this = $(this);
-      console.log($this.prop('checked'));
-      console.log($this.prop('id'));
+      console.log($this.prop('id'), $this.prop('checked'));
     });
 
     // Closes the sidebar menu
     $('#menu-close').click(function(e) {
       e.preventDefault();
       $('#sidebar-wrapper').toggleClass('active');
+      var _content = '搭乘時間: ' + $slider.find('.ui-slider-value:last').data('slidervalue');
+      _content += '\n開始時間: ' + $select.fromtime.val();
+
+      console.log(_content);
     });
 
     // Opens the sidebar menu
