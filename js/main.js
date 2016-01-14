@@ -380,6 +380,7 @@ String.prototype.repeat = function(num) {
       zoom: 12,
       disableDefaultUI: true,
       scrollwheel: false,
+      center: new google.maps.LatLng(25.047750, 121.517371),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       zoomControl: true,
       zoomControlOptions: {

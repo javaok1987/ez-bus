@@ -25,12 +25,12 @@ body {
 ::selection {
   /* WebKit/Blink Browsers */
   color: white;
-  background: #3498db; }
+  background: #1abc9c; }
 
 ::-moz-selection {
   /* Gecko Browsers */
   color: white;
-  background: #3498db; }
+  background: #1abc9c; }
 
 .clearfix {
   overflow: auto; }
