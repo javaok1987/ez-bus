@@ -158,7 +158,7 @@ String.prototype.repeat = function(num) {
         // Custom Selects
         if ($('[data-toggle="select"]').length) {
             $('[data-toggle="select"]').select2(); 
-            $('[data-toggle="select"]').attr('readonly','readonly');
+            $('[data-toggle="select"]').keydown(false);;
         }
 
         // jQuery UI Sliders
