@@ -21,10 +21,8 @@
       GMap.initMap(function() {
         $(window).resize(function(argument) {
           google.maps.event.trigger(GMap.map, 'resize');
-          resizeSidebarPanel();
         });
       });
-
     });
 
     var weekly = $('#weekly').find('.btn').on('click', function() {
@@ -53,14 +51,9 @@
       $('#sidebar-wrapper').toggleClass('active');
     });
 
-    resizeSidebarPanel();
-
     // $('.iui-overlay').find('.btn-close').click(); //test code;
 
   });
 
-  var resizeSidebarPanel = function(argument) {
-    $('.sidebar-panel').height($(window).height() - 320);
-  };
 
 })(jQuery);

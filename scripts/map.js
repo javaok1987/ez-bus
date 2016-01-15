@@ -77,7 +77,7 @@
     controlUI.style.borderRadius = '3px';
     controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
     controlUI.style.cursor = 'pointer';
-    controlUI.style.marginBottom = '22px';
+    controlUI.style.marginTop = '15px';
     controlUI.style.textAlign = 'center';
     controlUI.title = '顯示您的位置';
     controlDiv.appendChild(controlUI);

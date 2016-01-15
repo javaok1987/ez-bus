@@ -91,8 +91,8 @@ body
 
     text-align: center;
 
-    color: $inverse;
-    background-color: $belize-hole;
+    color: $belize-hole;
+    background-color: $peter-river;
 }
 
 .iui-overlay-close
@@ -135,5 +135,33 @@ body
         margin-bottom: 20px;
     }
 }
+
+#businfo-panal
+{
+    font-family: apercubold;
+    font-size: 16px;
+
+    position: fixed;
+    z-index: 9;
+    bottom: 25px;
+    left: 25px;
+
+    width: 220px;
+    height: auto;
+
+    opacity: .8;
+    color: black;
+    border: 1px solid $gray;
+    background-color: $inverse;
+    > ul
+    {
+        margin: 5px 10px;
+
+        list-style: none;
+
+        text-indent: -40px;
+    }
+}
+
 
 /* End CSS Overlay */
