@@ -58,8 +58,8 @@ body {
   width: 100%;
   height: 100%;
   text-align: center;
-  color: white;
-  background-color: #2980b9; }
+  color: #2980b9;
+  background-color: #3498db; }
 
 .iui-overlay-close {
   position: fixed;
@@ -88,6 +88,24 @@ body {
   .iui-modal-xs .row {
     margin-bottom: 20px; }
 
+#businfo-panal {
+  font-family: apercubold;
+  font-size: 16px;
+  position: fixed;
+  z-index: 9;
+  bottom: 25px;
+  left: 25px;
+  width: 220px;
+  height: auto;
+  opacity: .8;
+  color: black;
+  border: 1px solid #95a5a6;
+  background-color: white; }
+  #businfo-panal > ul {
+    margin: 5px 10px;
+    list-style: none;
+    text-indent: -40px; }
+
 /* End CSS Overlay */
 /* Side Menu */
 #sidebar-wrapper {
@@ -99,31 +117,22 @@ body {
   width: 320px;
   height: 100%;
   margin-right: -320px;
-  -webkit-transition: all .4s ease 0s;
-  -moz-transition: all .4s ease 0s;
-  -ms-transition: all .4s ease 0s;
-  -o-transition: all .4s ease 0s;
   transition: all .4s ease 0s;
   background-color: #222; }
 
 #sidebar-wrapper.active {
   right: 320px;
   width: 320px;
-  -webkit-transition: all .4s ease 0s;
-  -moz-transition: all .4s ease 0s;
-  -ms-transition: all .4s ease 0s;
-  -o-transition: all .4s ease 0s;
   transition: all .4s ease 0s; }
 
 .sidebar-panel {
-  top: 300px;
   overflow-x: hidden;
   overflow-y: auto;
   width: 320px;
-  border-top: 5px solid #ecf0f1; }
+  height: 100%;
+  padding-bottom: 80px; }
   .sidebar-panel .items {
-    width: 100%;
-    margin-top: 20px; }
+    width: 100%; }
     .sidebar-panel .items article {
       margin: 0;
       padding: 10px 20px; }
@@ -169,6 +178,7 @@ body {
       border-top-right-radius: 4px; }
 
 .toggle {
+  z-index: 9999;
   margin: 5px 5px 0 0; }
 
 #datepicker {
