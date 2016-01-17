@@ -120,7 +120,8 @@
 	"classie",
 	"Chart",
 	"GMap",
-	"swal"
+	"swal",
+	"TripTaipeiService"
 	]
 	//,	"indent" : 2 // Specify indentation spacing
 }

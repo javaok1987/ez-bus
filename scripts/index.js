@@ -2,26 +2,62 @@
 
 (function($) {
 
-  var $slider = $('#slider');
-  var $walkSlider = $('#walk-slider');
-  var $select = {
-    fromtime: $('#select-form-time')
-  };
-  var $conveyance = $('#article-conveyance');
-  var $wrapper = $('#wrapper');
-  var $footer = $('#footer');
+  var $slider = $('#slider'),
+    $walkSlider = $('#walk-slider'),
+    $select = {
+      fromtime: $('#select-form-time')
+    };
+
+  var $conveyance = $('#article-conveyance'),
+    $wrapper = $('#wrapper'),
+    $footer = $('#footer');
+
+  var walkingDistance = 600,
+    tripTime = 30;
 
 
-  jQuery(function($) {
+  $(function($) {
 
     window.alert = swal;
 
     $('.iui-overlay').find('.btn-close').on('click', function() {
+
       classie.addClass(document.getElementById('overlay'), 'hidden');
-      GMap.initMap(function() {
+
+      GMap.initialize(function() {
+
         $(window).resize(function(argument) {
           google.maps.event.trigger(GMap.map, 'resize');
         });
+
+        google.maps.event.addListener(GMap.map, 'idle', function() {
+          GMap.centerMarker.setPosition(GMap.map.getCenter());
+          GMap.centerCircle.setCenter(GMap.centerMarker.getPosition());
+        });
+        google.maps.event.addListener(GMap.infowindow, 'dragstart', function(event) {
+          GMap.infowindow.close();
+        });
+
+        google.maps.event.addListener(GMap.centerMarker, 'drag', function(event) {
+          GMap.centerCircle.setCenter(GMap.centerMarker.getPosition());
+        });
+
+        google.maps.event.addListener(GMap.map, 'idle', function() {
+          TripTaipeiService.getStops(GMap.map.getCenter().lat(), GMap.map.getCenter().lng(), walkingDistance, 'BYTM', GMap.addStops);
+          TripTaipeiService.getTripArea(GMap.map.getCenter().lat(), GMap.map.getCenter().lng(), walkingDistance, tripTime, 1, '0800', 'YMBT', GMap.addGeoJson);
+        });
+
+        google.maps.event.addListener(GMap.centerMarker, 'dragend', function(event) {
+          TripTaipeiService.getStops(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkingDistance, 'BYTM', GMap.addStops);
+          TripTaipeiService.getTripArea(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkingDistance, tripTime, 1, '0800', 'YMBT', GMap.addGeoJson);
+        });
+
+        google.maps.event.addListener(GMap.centerCircle, 'radius_changed', function() {
+          TripTaipeiService.getStops(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkingDistance, 'BYTM', GMap.addStops);
+          TripTaipeiService.getTripArea(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkingDistance, tripTime, 1, '0800', 'YMBT', GMap.addGeoJson);
+        });
+
+
       });
     });
 
@@ -33,6 +69,18 @@
     $conveyance.find('[data-toggle="checkbox"]').on('change.radiocheck', function(ele) {
       var $this = $(this);
       console.log($this.prop('id'), $this.prop('checked'));
+    });
+
+
+    $walkSlider.on('slidestop', function(event, ui) {
+      walkingDistance = $walkSlider.find('.ui-slider-value:last').data('slidervalue');
+      GMap.centerCircle.setOptions({
+        radius: walkingDistance
+      });
+    });
+
+    $slider.on('slidestop', function(event, ui) {
+      tripTime = $slider.find('.ui-slider-value:last').data('slidervalue');
     });
 
     // Closes the sidebar menu
@@ -51,7 +99,7 @@
       $('#sidebar-wrapper').toggleClass('active');
     });
 
-    // $('.iui-overlay').find('.btn-close').click(); //test code;
+    $('.iui-overlay').find('.btn-close').click(); //test code;
 
   });
 

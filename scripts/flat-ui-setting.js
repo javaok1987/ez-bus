@@ -17,7 +17,6 @@ String.prototype.repeat = function(num) {
       if ('vertical' === orientation) {
         var output = '',
           i;
-        console.log(amount);
         for (i = 1; i <= amount - 1; i + 1) {
           output += '<div class="ui-slider-segment" style="top:' + 100 / amount * i + '%;"></div>';
         }
@@ -34,7 +33,8 @@ String.prototype.repeat = function(num) {
 
     var $slider = $('#slider'),
       $walkSlider = $('#walk-slider'),
-      sliderValueMultiplier = 15;
+      sliderValueMultiplier = 15,
+      sliderWalkValueMultiplier = 100;
 
     // Disable link clicks to prevent page scrolling
     $(document).on('click', 'a[href="#fakelink"]', function(e) {
@@ -69,14 +69,14 @@ String.prototype.repeat = function(num) {
 
     if ($walkSlider.length > 0) {
       $walkSlider.slider({
-        min: 1,
-        max: 4,
-        value: 2,
+        min: 2,
+        max: 9,
+        value: 6,
         orientation: 'horizontal',
         range: 'min',
         slide: function(event, ui) {
-          var _value = ui.value * sliderValueMultiplier;
-          $walkSlider.find('.ui-slider-value:last').text(_value + ' 分鐘').data('slidervalue', _value);
+          var _value = ui.value * sliderWalkValueMultiplier;
+          $walkSlider.find('.ui-slider-value:last').text(_value + ' 公尺').data('slidervalue', _value);
         }
       }).addSliderSegments($walkSlider.slider('option').max);
     }
