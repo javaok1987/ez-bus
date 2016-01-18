@@ -1,141 +1,231 @@
 @import 'variables';
-* {
-  font-family: Arial, '文泉驛正黑', 'WenQuanYi Zen Hei', '儷黑 Pro', 'LiHei Pro', '微軟正黑體', 'Microsoft JhengHei', '標楷體', DFKai-SB, sans-serif;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+*
+{
+    font-family: Arial, '文泉驛正黑', 'WenQuanYi Zen Hei', '儷黑 Pro', 'LiHei Pro', '微軟正黑體', 'Microsoft JhengHei', '標楷體', DFKai-SB, sans-serif;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 html,
-body {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: rgb(229, 227, 223);
+body
+{
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: rgb(229, 227, 223);
 }
 
-#wrapper {
-  width: 100%;
-  height: 100%;
+#wrapper
+{
+    width: 100%;
+    height: 100%;
 }
 
-#map-canvas {
-  width: 100%;
-  height: 100%;
+#map-canvas
+{
+    width: 100%;
+    height: 100%;
 }
 
-::selection {
-  /* WebKit/Blink Browsers */
-  color: $inverse;
-  background: $peter-river;
-  ;
+::selection
+{
+    /* WebKit/Blink Browsers */
+    color: $inverse;
+    background: $peter-river;
+    ;
 }
 
-::-moz-selection {
-  /* Gecko Browsers */
-  color: $inverse;
-  background: $peter-river;
+::-moz-selection
+{
+    /* Gecko Browsers */
+    color: $inverse;
+    background: $peter-river;
 }
 
-.clearfix {
-  overflow: auto;
+.clearfix
+{
+    overflow: auto;
 }
 
-.hidden {
-  display: none;
+.hidden
+{
+    display: none;
 }
 
-.pull-center {
-  text-align: center;
+.pull-center
+{
+    text-align: center;
 }
 
 
 /* CSS Overlay */
 
-.iui-overlay {
-  position: fixed;
-  z-index: 1010;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+.iui-overlay
+{
+    position: fixed;
+    z-index: 1010;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
 }
 
-.iui-modal {
-  position: fixed;
-  z-index: 11;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  color: $belize-hole;
-  background-color: $peter-river;
+.iui-modal
+{
+    position: fixed;
+    z-index: 11;
+
+    overflow: auto;
+    overflow-x: hidden;
+
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+
+    color: $inverse;
 }
 
-.iui-overlay-close {
-  position: fixed;
-  top: .5em;
-  right: 1em;
-  cursor: pointer;
-}
+.iui-content
+{
+    width: 90%;
+    margin-top: 5%;
 
-.iui-content {
-  width: 90%;
-  margin-top: 5%;
-  .row {
-    margin-bottom: 1em;
-  }
-}
-
-.iui-modal-xs {
-  position: fixed;
-  z-index: 11;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 200px;
-  margin-top: -100px;
-  margin-left: -150px;
-  text-align: center;
-  color: $inverse;
-  border-radius: 5px;
-  .row {
-    margin-bottom: 20px;
-  }
-}
-
-#businfo-panal {
-  font-family: apercubold;
-  font-size: 16px;
-  position: fixed;
-  z-index: 9;
-  bottom: 25px;
-  left: 25px;
-  width: 220px;
-  height: auto;
-  opacity: .8;
-  color: black;
-  border: 1px solid $gray;
-  background-color: $inverse;
-  > ul {
-    margin: 5px 10px;
-    list-style: none;
-    text-indent: -40px;
-  }
-}
-
-#pageBlock {
-  .center-block {
-    top: 40%;
-    width: 200px;
-    img {
-      vertical-align: text-bottom;
+    background-color: rgba(0, 0, 0, .6);
+    .row
+    {
+        margin-bottom: 1em;
     }
-  }
+    .btn-close
+    {
+        background-color: rgba(255, 255, 255, .23);
+    }
+}
+
+.iui-modal-xs
+{
+    position: fixed;
+    z-index: 11;
+    top: 50%;
+    left: 50%;
+
+    width: 300px;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -150px;
+
+    text-align: center;
+
+    color: $inverse;
+    border-radius: 5px;
+    .row
+    {
+        margin-bottom: 20px;
+    }
+}
+
+.text-muted
+{
+    color: $inverse;
+}
+
+#businfo-panal
+{
+    font-family: apercubold;
+    font-size: 16px;
+
+    position: fixed;
+    z-index: 9;
+    bottom: 25px;
+    left: 25px;
+
+    width: 220px;
+    height: auto;
+
+    opacity: .8;
+    color: black;
+    border: 1px solid $gray;
+    background-color: $inverse;
+    > ul
+    {
+        margin: 5px 10px;
+
+        list-style: none;
+
+        text-indent: -40px;
+    }
+}
+
+#pageBlock
+{
+    .center-block
+    {
+        top: 40%;
+
+        width: 200px;
+        img
+        {
+            vertical-align: text-bottom;
+        }
+    }
 }
 
 
 /* End CSS Overlay */
+
+
+/* video */
+
+video#bgvid
+{
+    position: fixed;
+    z-index: -100;
+    top: 50%;
+    left: 50%;
+
+    display: block;
+
+    width: auto;
+    min-width: 100%;
+    height: auto;
+    min-height: 100%;
+
+    transition: 1s opacity;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+       -moz-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+
+    background: url(../video/taipeiopendata.png) no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-device-width: 800px)
+{
+    .iui-modal
+    {
+        background: url(../video/taipeiopendata.png) #000 no-repeat center center fixed;
+    }
+    video#bgvid
+    {
+        display: none;
+    }
+    .show-device
+    {
+        display: block;
+    }
+    .hide-device
+    {
+        display: none;
+    }
+}
+
+
+/* end video */

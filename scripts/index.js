@@ -29,6 +29,8 @@
 
     $('.iui-overlay').find('.btn-close').on('click', function() {
 
+      document.getElementById("bgvid").pause();
+
       classie.addClass(document.getElementById('overlay'), 'hidden');
 
       GMap.initialize(function() {
