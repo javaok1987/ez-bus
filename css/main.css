@@ -48,30 +48,26 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); }
+  height: 100%; }
 
 .iui-modal {
   position: fixed;
   z-index: 11;
   overflow: auto;
+  overflow-x: hidden;
   width: 100%;
   height: 100%;
   text-align: center;
-  color: #2980b9;
-  background-color: #3498db; }
-
-.iui-overlay-close {
-  position: fixed;
-  top: .5em;
-  right: 1em;
-  cursor: pointer; }
+  color: white; }
 
 .iui-content {
   width: 90%;
-  margin-top: 5%; }
+  margin-top: 5%;
+  background-color: rgba(0, 0, 0, 0.6); }
   .iui-content .row {
     margin-bottom: 1em; }
+  .iui-content .btn-close {
+    background-color: rgba(255, 255, 255, 0.23); }
 
 .iui-modal-xs {
   position: fixed;
@@ -87,6 +83,9 @@ body {
   border-radius: 5px; }
   .iui-modal-xs .row {
     margin-bottom: 20px; }
+
+.text-muted {
+  color: white; }
 
 #businfo-panal {
   font-family: apercubold;
@@ -113,6 +112,36 @@ body {
     vertical-align: text-bottom; }
 
 /* End CSS Overlay */
+/* video */
+video#bgvid {
+  position: fixed;
+  z-index: -100;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: auto;
+  min-width: 100%;
+  height: auto;
+  min-height: 100%;
+  transition: 1s opacity;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background: url(../video/taipeiopendata.png) no-repeat;
+  background-size: cover; }
+
+@media screen and (max-device-width: 800px) {
+  .iui-modal {
+    background: url(../video/taipeiopendata.png) #000 no-repeat center center fixed; }
+  video#bgvid {
+    display: none; }
+  .show-device {
+    display: block; }
+  .hide-device {
+    display: none; } }
+
+/* end video */
 /* Side Menu */
 #sidebar-wrapper {
   position: fixed;

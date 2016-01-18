@@ -206,6 +206,8 @@ String.prototype.repeat = function(num) {
 
     $('.iui-overlay').find('.btn-close').on('click', function() {
 
+      document.getElementById("bgvid").pause();
+
       classie.addClass(document.getElementById('overlay'), 'hidden');
 
       GMap.initialize(function() {
@@ -674,7 +676,6 @@ String.prototype.repeat = function(num) {
             title: 'Oops!',
             text: '設定條件內無大眾運輸資料.',
           });
-          return false;
         }
         (callback && typeof(callback) === "function") && callback(response);
       },
@@ -711,7 +712,6 @@ String.prototype.repeat = function(num) {
             title: "Sorry!",
             text: "設定條件內 無大眾運輸資料",
           });
-          return false;
         }
         state.result.area = '689';
         state.result.level = 'A';
