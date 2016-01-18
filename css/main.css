@@ -106,6 +106,16 @@ body {
     list-style: none;
     text-indent: -40px; }
 
+#pageBlock .center-block {
+  position: fixed;
+  padding: 5px;
+  margin: 0px;
+  width: 200px;
+  top: 40%;
+  left: 35%; }
+  #pageBlock .center-block img {
+    vertical-align: text-bottom; }
+
 /* End CSS Overlay */
 /* Side Menu */
 #sidebar-wrapper {
@@ -186,10 +196,13 @@ body {
 
 /* 交通工具 */
 #article-conveyance label:nth-child(2) {
-  color: #f39c12; }
+  color: #2980b9; }
 
 #article-conveyance label:nth-child(3) {
   color: #16a085; }
 
 #article-conveyance label:nth-child(4) {
   color: #c0392b; }
+
+#article-conveyance label:nth-child(5) {
+  color: #f39c12; }

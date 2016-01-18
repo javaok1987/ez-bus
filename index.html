@@ -114,20 +114,20 @@
                             <div id="weekly" class="col-xs-12">
                                 <div class="btn-toolbar">
                                     <div class="btn-group">
-                                        <a class="btn btn-primary active" href="#fakelink">Mon</a>
-                                        <a class="btn btn-primary" href="#fakelink">Tue</a>
-                                        <a class="btn btn-primary" href="#fakelink">Wed</a>
-                                        <a class="btn btn-primary" href="#fakelink">Thu</a>
-                                        <a class="btn btn-primary" href="#fakelink">Fri</a>
-                                        <a class="btn btn-primary" href="#fakelink">Sat</a>
-                                        <a class="btn btn-primary" href="#fakelink">Sun</a>
+                                        <a class="btn btn-primary" href="#fakelink" data-index="1">Mon</a>
+                                        <a class="btn btn-primary" href="#fakelink" data-index="2">Tue</a>
+                                        <a class="btn btn-primary" href="#fakelink" data-index="3">Wed</a>
+                                        <a class="btn btn-primary" href="#fakelink" data-index="4">Thu</a>
+                                        <a class="btn btn-primary" href="#fakelink" data-index="5">Fri</a>
+                                        <a class="btn btn-primary" href="#fakelink" data-index="6">Sat</a>
+                                        <a class="btn btn-primary" href="#fakelink" data-index="7">Sun</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-time">
                                 <select class="form-control select select-primary input-medium" data-toggle="select" id="select-form-time">
-                                    <option value="0800">08:00</option>
-                                    <option value="0900" selected>09:00</option>
+                                    <option value="0800" selected>08:00</option>
+                                    <option value="0900">09:00</option>
                                     <option value="1000">10:00</option>
                                     <option value="1100">11:00</option>
                                     <option value="1200">12:00</option>
@@ -147,13 +147,16 @@
                                 <!-- <span class="fui-user"></span> -->
                             </div>
                             <label class="checkbox" for="mrt">
-                                <input type="checkbox" id="mrt" data-toggle="checkbox"> 捷運
+                                <input type="checkbox" id="mrt" data-toggle="checkbox" checked> 捷運
                             </label>
                             <label class="checkbox" for="bus">
-                                <input type="checkbox" id="bus" data-toggle="checkbox"> 客運
+                                <input type="checkbox" id="bus" data-toggle="checkbox" checked> 客運
                             </label>
                             <label class="checkbox" for="train">
-                                <input type="checkbox" id="train" data-toggle="checkbox"> 火車
+                                <input type="checkbox" id="train" data-toggle="checkbox" checked> 火車
+                            </label>
+                            <label class="checkbox" for="youbike">
+                                <input type="checkbox" id="youbike" data-toggle="checkbox" checked> YouBike
                             </label>
                         </div>
                     </article>
@@ -170,19 +173,23 @@
                     </article>
                     <article>
                         <div class="share">
-                            <div class="btn btn-primary btn-block btn-large">圖層開關</div>
+                            <div class="btn btn-primary btn-block btn-large">站牌開關</div>
                             <ul>
                                 <li>
-                                    <label class="share-label" for="share-toggle2">公車站牌</label>
-                                    <input type="checkbox" data-toggle="switch" />
+                                    <label class="share-label" for="level-bus">公車站牌</label>
+                                    <input id="level-bus" type="checkbox" data-toggle="switch" value="B" checked/>
                                 </li>
                                 <li>
-                                    <label class="share-label" for="share-toggle4">捷運站</label>
-                                    <input type="checkbox" checked="" data-toggle="switch" />
+                                    <label class="share-label" for="level-mrt">捷運站</label>
+                                    <input id="level-mrt" type="checkbox" data-toggle="switch" value="M" checked/>
                                 </li>
                                 <li>
-                                    <label class="share-label" for="share-toggle6">火車站</label>
-                                    <input type="checkbox" data-toggle="switch" />
+                                    <label class="share-label" for="level-train">火車站</label>
+                                    <input id="level-train" type="checkbox" data-toggle="switch" value="T" checked/>
+                                </li>
+                                <li>
+                                    <label class="share-label" for="level-youbike">YouBike</label>
+                                    <input id="level-youbike" type="checkbox" data-toggle="switch" value="Y" checked/>
                                 </li>
                             </ul>
                         </div>
@@ -190,6 +197,15 @@
                 </div>
             </div>
         </nav>
+        <div id="pageBlock" class="iui-overlay hidden">
+            <div class="center-block login-form">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        查詢中...<img src="img/poi.gif">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /#wrapper -->
     <script>
