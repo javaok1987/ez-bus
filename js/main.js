@@ -192,7 +192,11 @@ String.prototype.repeat = function(num) {
     tripTime: 30,
     startTime: '0800',
     weekType: 1,
-    transitType: 'BYTM'
+    transitType: 'BYTM',
+    result: {
+      area: '0',
+      level: 'A'
+    }
   };
 
 
@@ -213,17 +217,12 @@ String.prototype.repeat = function(num) {
         google.maps.event.addListener(GMap.map, 'idle', function() {
           state.latitude = GMap.centerMarker.getPosition().lat();
           state.longitude = GMap.centerMarker.getPosition().lng();
-          TripTaipeiService.query(state);
+          TripTaipeiService.query(state, setQueryResult);
         });
 
-       
-
-      });
-    });
-
-     var weekly = $('#weekly').find('.btn').on('click', function() {
+        var weekly = $('#weekly').find('.btn').on('click', function() {
           state.weekType = $(this).data('index');
-          TripTaipeiService.query(state);
+          TripTaipeiService.query(state, setQueryResult);
         });
         state.weekType = new Date().getDay();
         $(weekly[state.weekType - 1]).addClass('active'); //判斷星期別.
@@ -242,33 +241,36 @@ String.prototype.repeat = function(num) {
           if ($('#youbike').prop('checked')) {
             state.transitType += 'Y';
           }
-          TripTaipeiService.query(state);
+          TripTaipeiService.query(state, setQueryResult);
         });
 
-
         $walkSlider.on('slidestop', function(event, ui) {
-         state.walkDistance = $walkSlider.find('.ui-slider-value:last').data('slidervalue');
+          state.walkDistance = $walkSlider.find('.ui-slider-value:last').data('slidervalue');
           GMap.centerCircle.setOptions({
             radius: state.walkDistance
           });
-          TripTaipeiService.query(state);
+          TripTaipeiService.query(state, setQueryResult);
         });
 
         $slider.on('slidestop', function(event, ui) {
           state.tripTime = $slider.find('.ui-slider-value:last').data('slidervalue');
-          TripTaipeiService.query(state);
+          TripTaipeiService.query(state, setQueryResult);
         });
 
         $selectTime.on('change', function(e) {
           state.startTime = e.val;
-          TripTaipeiService.query(state);
+          TripTaipeiService.query(state, setQueryResult);
         });
 
-        $('[data-toggle="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
-          var $switch = $(event.target);
-          GMap.checkStop($switch.prop('value'), state);
-          GMap.level[$switch.val()] = state;
-        });
+      });
+
+    });
+
+    $('[data-toggle="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+      var $switch = $(event.target);
+      GMap.checkStop($switch.prop('value'), state);
+      GMap.level[$switch.val()] = state;
+    });
 
     // Closes the sidebar menu
     $('#menu-close').click(function(e) {
@@ -282,15 +284,14 @@ String.prototype.repeat = function(num) {
       $('#sidebar-wrapper').toggleClass('active');
     });
 
-    $('.iui-overlay').find('.btn-close').click(); //test code;
+    // $('.iui-overlay').find('.btn-close').click(); //test code;
 
   });
 
-  // var query = function() {
-  //   console.log(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkDistance, tripTime, weekType, startTime, transitType)
-  //   TripTaipeiService.getStops(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkDistance, transitType, GMap.addStops);
-  //   // TripTaipeiService.getTripArea(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkDistance, tripTime, weekType, startTime, transitType, GMap.addGeoJson);
-  // }
+  var setQueryResult = function(state) {
+    $('#service-area').text(state.result.area);
+    $('#service-level').text(state.result.level);
+  };
 
 })(jQuery);
 
@@ -335,7 +336,7 @@ String.prototype.repeat = function(num) {
         position: google.maps.ControlPosition.LEFT_CENTER
       },
       // center: new google.maps.LatLng() //全台23.714059, 120.832002
-      // styles: [{'featureType':'administrative','elementType':'all','stylers':[{'visibility':'on'},{'lightness':33}]},{'featureType':'administrative','elementType':'labels','stylers':[{'saturation':'-100'}]},{'featureType':'administrative','elementType':'labels.text','stylers':[{'gamma':'0.75'}]},{'featureType':'administrative.neighborhood','elementType':'labels.text.fill','stylers':[{'lightness':'-37'}]},{'featureType':'landscape','elementType':'geometry','stylers':[{'color':'#f9f9f9'}]},{'featureType':'landscape.man_made','elementType':'geometry','stylers':[{'saturation':'-100'},{'lightness':'40'},{'visibility':'off'}]},{'featureType':'landscape.natural','elementType':'labels.text.fill','stylers':[{'saturation':'-100'},{'lightness':'-37'}]},{'featureType':'landscape.natural','elementType':'labels.text.stroke','stylers':[{'saturation':'-100'},{'lightness':'100'},{'weight':'2'}]},{'featureType':'landscape.natural','elementType':'labels.icon','stylers':[{'saturation':'-100'}]},{'featureType':'poi','elementType':'geometry','stylers':[{'saturation':'-100'},{'lightness':'80'}]},{'featureType':'poi','elementType':'labels','stylers':[{'saturation':'-100'},{'lightness':'0'}]},{'featureType':'poi.attraction','elementType':'geometry','stylers':[{'lightness':'-4'},{'saturation':'-100'}]},{'featureType':'poi.park','elementType':'geometry','stylers':[{'color':'#c5dac6'},{'visibility':'on'},{'saturation':'-95'},{'lightness':'62'}]},{'featureType':'poi.park','elementType':'labels','stylers':[{'visibility':'on'},{'lightness':20}]},{'featureType':'road','elementType':'all','stylers':[{'lightness':20}]},{'featureType':'road','elementType':'labels','stylers':[{'saturation':'-100'},{'gamma':'1.00'}]},{'featureType':'road','elementType':'labels.text','stylers':[{'gamma':'0.50'}]},{'featureType':'road','elementType':'labels.icon','stylers':[{'saturation':'-100'},{'gamma':'0.50'}]},{'featureType':'road.highway','elementType':'geometry','stylers':[{'color':'#c5c6c6'},{'saturation':'-100'}]},{'featureType':'road.highway','elementType':'geometry.stroke','stylers':[{'lightness':'-13'}]},{'featureType':'road.highway','elementType':'labels.icon','stylers':[{'lightness':'0'},{'gamma':'1.09'}]},{'featureType':'road.arterial','elementType':'geometry','stylers':[{'color':'#e4d7c6'},{'saturation':'-100'},{'lightness':'47'}]},{'featureType':'road.arterial','elementType':'geometry.stroke','stylers':[{'lightness':'-12'}]},{'featureType':'road.arterial','elementType':'labels.icon','stylers':[{'saturation':'-100'}]},{'featureType':'road.local','elementType':'geometry','stylers':[{'color':'#fbfaf7'},{'lightness':'77'}]},{'featureType':'road.local','elementType':'geometry.fill','stylers':[{'lightness':'-5'},{'saturation':'-100'}]},{'featureType':'road.local','elementType':'geometry.stroke','stylers':[{'saturation':'-100'},{'lightness':'-15'}]},{'featureType':'transit.station.airport','elementType':'geometry','stylers':[{'lightness':'47'},{'saturation':'-100'}]},{'featureType':'water','elementType':'all','stylers':[{'visibility':'on'},{'color':'#acbcc9'}]},{'featureType':'water','elementType':'geometry','stylers':[{'saturation':'53'}]},{'featureType':'water','elementType':'labels.text.fill','stylers':[{'lightness':'-42'},{'saturation':'17'}]},{'featureType':'water','elementType':'labels.text.stroke','stylers':[{'lightness':'61'}]}]
+      styles: [{'featureType':'administrative','elementType':'all','stylers':[{'visibility':'on'},{'lightness':33}]},{'featureType':'administrative','elementType':'labels','stylers':[{'saturation':'-100'}]},{'featureType':'administrative','elementType':'labels.text','stylers':[{'gamma':'0.75'}]},{'featureType':'administrative.neighborhood','elementType':'labels.text.fill','stylers':[{'lightness':'-37'}]},{'featureType':'landscape','elementType':'geometry','stylers':[{'color':'#f9f9f9'}]},{'featureType':'landscape.man_made','elementType':'geometry','stylers':[{'saturation':'-100'},{'lightness':'40'},{'visibility':'off'}]},{'featureType':'landscape.natural','elementType':'labels.text.fill','stylers':[{'saturation':'-100'},{'lightness':'-37'}]},{'featureType':'landscape.natural','elementType':'labels.text.stroke','stylers':[{'saturation':'-100'},{'lightness':'100'},{'weight':'2'}]},{'featureType':'landscape.natural','elementType':'labels.icon','stylers':[{'saturation':'-100'}]},{'featureType':'poi','elementType':'geometry','stylers':[{'saturation':'-100'},{'lightness':'80'}]},{'featureType':'poi','elementType':'labels','stylers':[{'saturation':'-100'},{'lightness':'0'}]},{'featureType':'poi.attraction','elementType':'geometry','stylers':[{'lightness':'-4'},{'saturation':'-100'}]},{'featureType':'poi.park','elementType':'geometry','stylers':[{'color':'#c5dac6'},{'visibility':'on'},{'saturation':'-95'},{'lightness':'62'}]},{'featureType':'poi.park','elementType':'labels','stylers':[{'visibility':'on'},{'lightness':20}]},{'featureType':'road','elementType':'all','stylers':[{'lightness':20}]},{'featureType':'road','elementType':'labels','stylers':[{'saturation':'-100'},{'gamma':'1.00'}]},{'featureType':'road','elementType':'labels.text','stylers':[{'gamma':'0.50'}]},{'featureType':'road','elementType':'labels.icon','stylers':[{'saturation':'-100'},{'gamma':'0.50'}]},{'featureType':'road.highway','elementType':'geometry','stylers':[{'color':'#c5c6c6'},{'saturation':'-100'}]},{'featureType':'road.highway','elementType':'geometry.stroke','stylers':[{'lightness':'-13'}]},{'featureType':'road.highway','elementType':'labels.icon','stylers':[{'lightness':'0'},{'gamma':'1.09'}]},{'featureType':'road.arterial','elementType':'geometry','stylers':[{'color':'#e4d7c6'},{'saturation':'-100'},{'lightness':'47'}]},{'featureType':'road.arterial','elementType':'geometry.stroke','stylers':[{'lightness':'-12'}]},{'featureType':'road.arterial','elementType':'labels.icon','stylers':[{'saturation':'-100'}]},{'featureType':'road.local','elementType':'geometry','stylers':[{'color':'#fbfaf7'},{'lightness':'77'}]},{'featureType':'road.local','elementType':'geometry.fill','stylers':[{'lightness':'-5'},{'saturation':'-100'}]},{'featureType':'road.local','elementType':'geometry.stroke','stylers':[{'saturation':'-100'},{'lightness':'-15'}]},{'featureType':'transit.station.airport','elementType':'geometry','stylers':[{'lightness':'47'},{'saturation':'-100'}]},{'featureType':'water','elementType':'all','stylers':[{'visibility':'on'},{'color':'#acbcc9'}]},{'featureType':'water','elementType':'geometry','stylers':[{'saturation':'53'}]},{'featureType':'water','elementType':'labels.text.fill','stylers':[{'lightness':'-42'},{'saturation':'17'}]},{'featureType':'water','elementType':'labels.text.stroke','stylers':[{'lightness':'61'}]}]
     };
 
     self.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -378,6 +379,7 @@ String.prototype.repeat = function(num) {
       self.centerMarker.setPosition(self.map.getCenter());
       self.centerCircle.setCenter(self.centerMarker.getPosition());
     });
+
     google.maps.event.addListener(self.infowindow, 'dragstart', function(event) {
       self.infowindow.close();
     });
@@ -534,7 +536,6 @@ String.prototype.repeat = function(num) {
     GMap.clearMap('Stop');
     if (data.result.length > 0) {
       for (var i = data.result.length - 1; i >= 0; i--) {
-
         var _fillColor = '';
         var _title = '';
         var _type = data.result[i].type;
@@ -577,11 +578,6 @@ String.prototype.repeat = function(num) {
         stopsAry.push(_marker);
         setMarkerInfoWindow(_marker, _title + data.result[i].name);
       }
-    } else {
-      swal({
-        title: 'Oops!',
-        text: '設定條件內無大眾運輸資料.',
-      });
     }
   };
 
@@ -596,6 +592,7 @@ String.prototype.repeat = function(num) {
         strokeWeight: 0.5,
         zIndex: 997
       });
+
       busLayer.setStyle({
         fillColor: '#16a085',
         fillOpacity: 0.5,
@@ -604,6 +601,7 @@ String.prototype.repeat = function(num) {
         strokeWeight: 0.5,
         zIndex: 996
       });
+
       traLayer.setStyle({
         fillColor: '#c0392b',
         fillOpacity: 0.5,
@@ -612,11 +610,13 @@ String.prototype.repeat = function(num) {
         strokeWeight: 0.5,
         zIndex: 998
       });
+
       ubikeLayer.setOptions({
         fillColor: '#f39c12',
         fillOpacity: 0.5,
         zIndex: 995
       });
+
       if (data.result.B) {
         busLayer.addGeoJson(jQuery.parseJSON(data.result.B));
       }
@@ -629,15 +629,11 @@ String.prototype.repeat = function(num) {
       if (data.result.Y) { //待api調整.
         // ubikeLayer.setPaths(jQuery.parseJSON(data.result.Y)[0].coordinates);
       }
+
       busLayer.setMap(GMap.map);
       mrtLayer.setMap(GMap.map);
       traLayer.setMap(GMap.map);
       ubikeLayer.setMap(GMap.map);
-    } else {
-      swal({
-        title: 'Oops!',
-        text: '設定條件內無大眾運輸資料.',
-      });
     }
   };
 
@@ -668,21 +664,28 @@ String.prototype.repeat = function(num) {
   var TripTaipeiService = {};
 
   TripTaipeiService.getStops = function(state, callback) {
-    $.ajax({
+    return $.ajax({
       url: Urls.getStops.replace('#{lng}', state.longitude).replace('#{lat}', state.latitude).replace('#{distance}', state.walkDistance).replace('#{type}', state.transitType),
       jsonp: 'callback',
       dataType: 'jsonp',
       success: function(response) {
+        if (response.result === '0') {
+          swal({
+            title: 'Oops!',
+            text: '設定條件內無大眾運輸資料.',
+          });
+          return false;
+        }
         (callback && typeof(callback) === "function") && callback(response);
       },
       error: function(error) {
-        console.log(error);
+        console.error(error);
       }
     });
   };
 
   TripTaipeiService.getTripArea = function(state, callback) {
-    $.ajax({
+    return $.ajax({
       url: Urls.getTripArea,
       jsonp: 'callback',
       type: 'POST',
@@ -703,19 +706,30 @@ String.prototype.repeat = function(num) {
         classie.addClass(document.getElementById('pageBlock'), 'hidden');
       },
       success: function(response) {
+        if (jQuery.isEmptyObject(response)) {
+          swal({
+            title: "Sorry!",
+            text: "設定條件內 無大眾運輸資料",
+          });
+          return false;
+        }
+        state.result.area = '689';
+        state.result.level = 'A';
         (callback && typeof(callback) === "function") && callback(response);
       },
       error: function(error) {
-        console.log(error);
+        console.error(error);
       }
     });
   };
 
-  TripTaipeiService.query = function(state) {
-    console.log(state);
-    this.getStops(state, GMap.addStops);
-    this.getTripArea(state, GMap.addGeoJson);
-  }
+  TripTaipeiService.query = function(state, callback) {
+    var stopsAjax = this.getStops(state, GMap.addStops);
+    var tripAreaAjax = this.getTripArea(state, GMap.addGeoJson);
+    $.when.apply($, [stopsAjax, tripAreaAjax]).then(function() {
+      (callback && typeof(callback) === "function") && callback(state);
+    });
+  };
 
   // transport
   if (typeof define === 'function' && define.amd) {
