@@ -4,16 +4,23 @@
 
   var $slider = $('#slider'),
     $walkSlider = $('#walk-slider'),
-    $select = {
-      fromtime: $('#select-form-time')
-    };
+    $selectTime = $('#select-form-time');
 
   var $conveyance = $('#article-conveyance'),
     $wrapper = $('#wrapper'),
     $footer = $('#footer');
 
-  var walkingDistance = 600,
-    tripTime = 30;
+  var state = {
+    walkDistance: 600,
+    tripTime: 30,
+    startTime: '0800',
+    weekType: 1,
+    transitType: 'BYTM',
+    result: {
+      area: '0',
+      level: 'A'
+    }
+  };
 
 
   $(function($) {
@@ -31,66 +38,67 @@
         });
 
         google.maps.event.addListener(GMap.map, 'idle', function() {
-          GMap.centerMarker.setPosition(GMap.map.getCenter());
-          GMap.centerCircle.setCenter(GMap.centerMarker.getPosition());
-        });
-        google.maps.event.addListener(GMap.infowindow, 'dragstart', function(event) {
-          GMap.infowindow.close();
+          state.latitude = GMap.centerMarker.getPosition().lat();
+          state.longitude = GMap.centerMarker.getPosition().lng();
+          TripTaipeiService.query(state, setQueryResult);
         });
 
-        google.maps.event.addListener(GMap.centerMarker, 'drag', function(event) {
-          GMap.centerCircle.setCenter(GMap.centerMarker.getPosition());
+        var weekly = $('#weekly').find('.btn').on('click', function() {
+          state.weekType = $(this).data('index');
+          TripTaipeiService.query(state, setQueryResult);
+        });
+        state.weekType = new Date().getDay();
+        $(weekly[state.weekType - 1]).addClass('active'); //判斷星期別.
+
+        $conveyance.find('[data-toggle="checkbox"]').on('change.radiocheck', function(ele) {
+          state.transitType = '';
+          if ($('#bus').prop('checked')) {
+            state.transitType += 'B';
+          }
+          if ($('#mrt').prop('checked')) {
+            state.transitType += 'M';
+          }
+          if ($('#train').prop('checked')) {
+            state.transitType += 'T';
+          }
+          if ($('#youbike').prop('checked')) {
+            state.transitType += 'Y';
+          }
+          TripTaipeiService.query(state, setQueryResult);
         });
 
-        google.maps.event.addListener(GMap.map, 'idle', function() {
-          TripTaipeiService.getStops(GMap.map.getCenter().lat(), GMap.map.getCenter().lng(), walkingDistance, 'BYTM', GMap.addStops);
-          TripTaipeiService.getTripArea(GMap.map.getCenter().lat(), GMap.map.getCenter().lng(), walkingDistance, tripTime, 1, '0800', 'YMBT', GMap.addGeoJson);
+        $walkSlider.on('slidestop', function(event, ui) {
+          state.walkDistance = $walkSlider.find('.ui-slider-value:last').data('slidervalue');
+          GMap.centerCircle.setOptions({
+            radius: state.walkDistance
+          });
+          TripTaipeiService.query(state, setQueryResult);
         });
 
-        google.maps.event.addListener(GMap.centerMarker, 'dragend', function(event) {
-          TripTaipeiService.getStops(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkingDistance, 'BYTM', GMap.addStops);
-          TripTaipeiService.getTripArea(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkingDistance, tripTime, 1, '0800', 'YMBT', GMap.addGeoJson);
+        $slider.on('slidestop', function(event, ui) {
+          state.tripTime = $slider.find('.ui-slider-value:last').data('slidervalue');
+          TripTaipeiService.query(state, setQueryResult);
         });
 
-        google.maps.event.addListener(GMap.centerCircle, 'radius_changed', function() {
-          TripTaipeiService.getStops(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkingDistance, 'BYTM', GMap.addStops);
-          TripTaipeiService.getTripArea(GMap.centerMarker.getPosition().lat(), GMap.centerMarker.getPosition().lng(), walkingDistance, tripTime, 1, '0800', 'YMBT', GMap.addGeoJson);
+        $selectTime.on('change', function(e) {
+          state.startTime = e.val;
+          TripTaipeiService.query(state, setQueryResult);
         });
-
 
       });
+
     });
 
-    var weekly = $('#weekly').find('.btn').on('click', function() {
-      console.log($(this).text());
-    });
-    $(weekly[new Date().getDay()]).click(); //判斷星期別.
-
-    $conveyance.find('[data-toggle="checkbox"]').on('change.radiocheck', function(ele) {
-      var $this = $(this);
-      console.log($this.prop('id'), $this.prop('checked'));
-    });
-
-
-    $walkSlider.on('slidestop', function(event, ui) {
-      walkingDistance = $walkSlider.find('.ui-slider-value:last').data('slidervalue');
-      GMap.centerCircle.setOptions({
-        radius: walkingDistance
-      });
-    });
-
-    $slider.on('slidestop', function(event, ui) {
-      tripTime = $slider.find('.ui-slider-value:last').data('slidervalue');
+    $('[data-toggle="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+      var $switch = $(event.target);
+      GMap.checkStop($switch.prop('value'), state);
+      GMap.level[$switch.val()] = state;
     });
 
     // Closes the sidebar menu
     $('#menu-close').click(function(e) {
       e.preventDefault();
       $('#sidebar-wrapper').toggleClass('active');
-      var _content = '搭乘時間: ' + $slider.find('.ui-slider-value:last').data('slidervalue');
-      _content += '\n開始時間: ' + $select.fromtime.val();
-
-      console.log(_content);
     });
 
     // Opens the sidebar menu
@@ -99,9 +107,13 @@
       $('#sidebar-wrapper').toggleClass('active');
     });
 
-    $('.iui-overlay').find('.btn-close').click(); //test code;
+    // $('.iui-overlay').find('.btn-close').click(); //test code;
 
   });
 
+  var setQueryResult = function(state) {
+    $('#service-area').text(state.result.area);
+    $('#service-level').text(state.result.level);
+  };
 
 })(jQuery);
