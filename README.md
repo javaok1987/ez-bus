@@ -1,6 +1,10 @@
 # ezBus
 
-## Install
+
+Taipei OMG 綠色交通應用開發大賽：[連結](https://taipeiomg.bhuntr.com/)
+
+
+### Install
 
 Install dependencies.
 
@@ -9,8 +13,9 @@ $ npm install
 $ bower install
 ```
 
-## Run
+### Run
 
 ```bash
 $ gulp
 ```
+
