@@ -7,8 +7,7 @@
     $selectTime = $('#select-form-time');
 
   var $conveyance = $('#article-conveyance'),
-    $wrapper = $('#wrapper'),
-    $footer = $('#footer');
+    $wrapper = $('#wrapper');
 
   var state = {
     walkDistance: 600,
@@ -22,16 +21,20 @@
     }
   };
 
-
   $(function($) {
+
+    classie.removeClass(document.getElementById('wrapper'), 'hidden');
+
 
     window.alert = swal;
 
-    $('.iui-overlay').find('.btn-close').on('click', function() {
+    $('.iui-overlay').find('button').on('click', function() {
 
-      document.getElementById("bgvid").pause();
+      pauseVideo();
 
       classie.addClass(document.getElementById('overlay'), 'hidden');
+      classie.removeClass(document.getElementById('businfo-panal'), 'hidden');
+      classie.removeClass(document.getElementById('menu-toggle'), 'hidden');
 
       GMap.initialize(function() {
 
@@ -52,7 +55,7 @@
         state.weekType = new Date().getDay();
         $(weekly[state.weekType - 1]).addClass('active'); //判斷星期別.
 
-        $conveyance.find('[data-toggle="checkbox"]').on('change.radiocheck', function(ele) {
+        $wrapper.find('#article-conveyance>[data-toggle="checkbox"]').on('change.radiocheck', function(ele) {
           state.transitType = '';
           if ($('#bus').prop('checked')) {
             state.transitType += 'B';
@@ -117,5 +120,17 @@
     $('#service-area').text(state.result.area);
     $('#service-level').text(state.result.level);
   };
+
+  var pauseVideo = function() {
+    var vid = document.getElementById('bgvid');
+    vid.pause();
+    vid.addEventListener('ended', function() {
+      // only functional if "loop" is removed 
+      vid.pause();
+      // to capture IE10
+      vid.classList.add('stopfade');
+    });
+
+  }
 
 })(jQuery);
