@@ -12,7 +12,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #e5e3df; }
+  background: url("../video/taipeiopendata.png") #000 no-repeat center center fixed; }
 
 #wrapper {
   width: 100%;
@@ -48,7 +48,8 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); }
 
 .iui-modal {
   position: fixed;
@@ -84,6 +85,21 @@ body {
   .iui-modal-xs .row {
     margin-bottom: 20px; }
 
+#overlay-mdl button {
+  font-size: 1.3rem;
+  display: block;
+  width: 80%;
+  margin: 1rem auto;
+  padding: .4rem;
+  cursor: pointer;
+  transition: .3s background;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.23); }
+  #overlay-mdl button:hover {
+    background: rgba(0, 0, 0, 0.5); }
+
 .text-muted {
   color: white; }
 
@@ -100,7 +116,7 @@ body {
   color: black;
   border: 1px solid #95a5a6;
   background-color: white; }
-  #businfo-panal > ul {
+  #businfo-panal ul {
     margin: 5px 10px;
     list-style: none;
     text-indent: -40px; }
@@ -113,39 +129,28 @@ body {
 
 /* End CSS Overlay */
 /* video */
+.stopfade {
+  opacity: .5; }
+
 video#bgvid {
   position: fixed;
   z-index: -100;
   top: 50%;
   left: 50%;
-  display: block;
   width: auto;
   min-width: 100%;
   height: auto;
   min-height: 100%;
   transition: 1s opacity;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  background: url(../video/taipeiopendata.png) no-repeat;
+  background: url("../video/taipeiopendata.png") no-repeat;
   background-size: cover; }
 
 @media screen and (max-device-width: 800px) {
-  .iui-modal {
-    background: url(../video/taipeiopendata.png) #000 no-repeat center center fixed; }
-  video#bgvid {
-    display: none; }
-  .show-device {
-    display: block; }
-  .hide-device {
+  html {
+    background: url("../video/taipeiopendata.png") #000 no-repeat center center fixed; }
+  #bgvid {
     display: none; } }
-
-video#bgvid {
-  transition: 1s opacity; }
-
-.stopfade {
-  opacity: .5; }
 
 /* end video */
 /* Side Menu */
