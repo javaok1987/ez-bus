@@ -150,6 +150,10 @@ video#bgvid {
   html {
     background: url("../video/taipeiopendata.png") #000 no-repeat center center fixed; }
   #bgvid {
+    display: none; }
+  .show-device {
+    display: block; }
+  .hide-device {
     display: none; } }
 
 /* end video */

@@ -307,8 +307,7 @@ String.prototype.repeat = function(num) {
       // to capture IE10
       vid.classList.add('stopfade');
     });
-
-  }
+  };
 
 })(jQuery);
 
