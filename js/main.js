@@ -199,6 +199,7 @@ String.prototype.repeat = function(num) {
     }
   };
 
+  var vid = document.getElementById('bgvid');
 
   $(function($) {
 
@@ -206,7 +207,13 @@ String.prototype.repeat = function(num) {
 
     $('.iui-overlay').find('.btn-close').on('click', function() {
 
-      document.getElementById("bgvid").pause();
+      vid.pause();
+      vid.addEventListener('ended', function() {
+        // only functional if "loop" is removed 
+        vid.pause();
+        // to capture IE10
+        vidFade();
+      });
 
       classie.addClass(document.getElementById('overlay'), 'hidden');
 
@@ -294,6 +301,10 @@ String.prototype.repeat = function(num) {
     $('#service-area').text(state.result.area);
     $('#service-level').text(state.result.level);
   };
+
+  var vidFade = function() {
+    vid.classList.add("stopfade");
+  }
 
 })(jQuery);
 

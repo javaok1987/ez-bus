@@ -141,6 +141,12 @@ video#bgvid {
   .hide-device {
     display: none; } }
 
+video#bgvid {
+  transition: 1s opacity; }
+
+.stopfade {
+  opacity: .5; }
+
 /* end video */
 /* Side Menu */
 #sidebar-wrapper {
