@@ -32,7 +32,6 @@
 
       pauseVideo();
 
-      classie.addClass(document.getElementById('overlay'), 'hidden');
       classie.removeClass(document.getElementById('businfo-panal'), 'hidden');
       classie.removeClass(document.getElementById('menu-toggle'), 'hidden');
 
@@ -43,6 +42,12 @@
         });
 
         google.maps.event.addListener(GMap.map, 'idle', function() {
+          state.latitude = GMap.centerMarker.getPosition().lat();
+          state.longitude = GMap.centerMarker.getPosition().lng();
+          $('#overlay').slideUp('slow');
+        });
+
+        google.maps.event.addListener(GMap.centerMarker, 'dragend', function(event) {
           state.latitude = GMap.centerMarker.getPosition().lat();
           state.longitude = GMap.centerMarker.getPosition().lng();
           TripTaipeiService.query(state, setQueryResult);
