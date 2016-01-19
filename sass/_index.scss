@@ -24,8 +24,6 @@ body
 
 #wrapper
 {
-    // display: none;
-
     width: 100%;
     height: 100%;
 }
@@ -248,50 +246,15 @@ video#bgvid
     {
         display: none;
     }
+    .show-device
+    {
+        display: block;
+    }
+    .hide-device
+    {
+        display: none;
+    }
 }
 
-
-// video#bgvid
-// {
-//     position: fixed;
-//     z-index: -100;
-//     top: 50%;
-//     left: 50%;
-//     display: block;
-//     width: auto;
-//     min-width: 100%;
-//     height: auto;
-//     min-height: 100%;
-//     transition: 1s opacity;
-//     -webkit-transform: translateX(-50%) translateY(-50%);
-//        -moz-transform: translateX(-50%) translateY(-50%);
-//         -ms-transform: translateX(-50%) translateY(-50%);
-//             transform: translateX(-50%) translateY(-50%);
-//     background: url($background-img) no-repeat;
-//     background-size: cover;
-// }
-// @media screen and (max-device-width: 800px)
-// {
-//     .iui-modal
-//     {
-//         background: url($background-img) #000 no-repeat center center fixed;
-//     }
-//     video#bgvid
-//     {
-//         display: none;
-//     }
-//     .show-device
-//     {
-//         display: block;
-//     }
-//     .hide-device
-//     {
-//         display: none;
-//     }
-// }
-// video#bgvid
-// {
-//     // transition: 1s opacity;
-// }
 
 /* end video */

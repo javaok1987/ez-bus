@@ -130,7 +130,6 @@
       // to capture IE10
       vid.classList.add('stopfade');
     });
-
-  }
+  };
 
 })(jQuery);
