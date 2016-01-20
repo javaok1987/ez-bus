@@ -180,8 +180,7 @@ String.prototype.repeat = function(num) {
 (function($) {
 
   var $slider = $('#slider'),
-    $walkSlider = $('#walk-slider'),
-    $selectTime = $('#select-form-time');
+    $walkSlider = $('#walk-slider');
 
   var $conveyance = $('#article-conveyance'),
     $wrapper = $('#wrapper');
@@ -267,11 +266,6 @@ String.prototype.repeat = function(num) {
           TripTaipeiService.query(state, setQueryResult);
         });
 
-        $selectTime.on('change', function(e) {
-          state.startTime = e.val;
-          TripTaipeiService.query(state, setQueryResult);
-        });
-
       });
 
     });
@@ -294,7 +288,21 @@ String.prototype.repeat = function(num) {
       $('#sidebar-wrapper').toggleClass('active');
     });
 
+    $('#timepicker').timepicker({
+      defaultTime: '08:00 AM',
+      disableFocus: false,
+      showMeridian:false
+    }).on('hide.timepicker', function(e) {
+      var _selectTime =  e.time.value;
+      if (e.time.hours < 10) {
+        _selectTime = '0' + _selectTime;
+      }
+      state.startTime = _selectTime.replace(':', '');
+      TripTaipeiService.query(state, setQueryResult);
+    });
+
     // $('.iui-overlay').find('button').click(); //test code;
+    // $('#menu-toggle').click(); //test code;
 
   });
 
@@ -747,6 +755,7 @@ String.prototype.repeat = function(num) {
   };
 
   TripTaipeiService.query = function(state, callback) {
+    console.log(state)
     var stopsAjax = this.getStops(state, GMap.addStops);
     var tripAreaAjax = this.getTripArea(state, GMap.addGeoJson);
     $.when.apply($, [stopsAjax, tripAreaAjax]).then(function() {
