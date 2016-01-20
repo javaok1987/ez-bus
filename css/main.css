@@ -249,9 +249,10 @@ video#bgvid {
 
 /*出發時間*/
 #select-form-time {
-  margin: 0 auto;
-  width: 80%; }
+  width: 80%;
+  margin: 0 auto; }
   #select-form-time span.input-group-addon {
     background-color: #3498db; }
-  #select-form-time .form-control, #select-form-time .input-group-addon {
+  #select-form-time .form-control,
+  #select-form-time .input-group-addon {
     border-color: #3498db; }

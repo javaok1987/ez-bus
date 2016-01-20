@@ -370,6 +370,8 @@ String.prototype.repeat = function(num) {
 
     self.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+    getCurrentLocation(); //定位.
+
     self.centerMarker = new google.maps.Marker({
       draggable: true,
       position: latlng,
@@ -381,7 +383,6 @@ String.prototype.repeat = function(num) {
       content: '<p>拖曳我<span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></p>'
     });
     self.infowindow.open(self.map, self.centerMarker);
-
 
     var centerControlDiv = document.createElement('div');
     var centerControl = new CenterControl(centerControlDiv, self.map);
@@ -401,15 +402,15 @@ String.prototype.repeat = function(num) {
       zIndex: 999
     });
 
+
     // google.maps.event.addListener(self.centerMarker, 'dragend', function(event) {
     //   locationAddress(self.centerMarker.getPosition().lat(), self.centerMarker.getPosition().lng());
     // });
 
-
-    // google.maps.event.addListener(self.map, 'idle', function() {
-    //   self.centerMarker.setPosition(self.map.getCenter());
-    //   self.centerCircle.setCenter(self.centerMarker.getPosition());
-    // });
+    google.maps.event.addListener(self.map, 'idle', function() {
+      self.centerMarker.setPosition(self.map.getCenter());
+      self.centerCircle.setCenter(self.centerMarker.getPosition());
+    });
 
     google.maps.event.addListener(self.centerMarker, 'dragstart', function(event) {
       self.infowindow.close();
@@ -418,8 +419,6 @@ String.prototype.repeat = function(num) {
     google.maps.event.addListener(self.centerMarker, 'drag', function(event) {
       self.centerCircle.setCenter(self.centerMarker.getPosition());
     });
-
-    getCurrentLocation();
 
     (callback && typeof(callback) === 'function') && callback();
   };
