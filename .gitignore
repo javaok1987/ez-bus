@@ -42,3 +42,5 @@ node_modules
 app/assets
 app/css
 app/js
+
+.publish/

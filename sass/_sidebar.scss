@@ -72,6 +72,7 @@
     top: 0;
     right: 0;
 }
+
 #menu-toggle:hover
 {
     color: #7f8c8d;
@@ -134,6 +135,7 @@
 
 
 /* 交通工具 */
+
 #article-conveyance
 {
     label:nth-child(2)
@@ -152,5 +154,22 @@
     {
         color: $orange;
     }
-    
+}
+
+
+/*出發時間*/
+
+#select-form-time
+{
+    width: 80%;
+    margin: 0 auto;
+    span.input-group-addon
+    {
+        background-color: $peter-river;
+    }
+    .form-control,
+    .input-group-addon
+    {
+        border-color: $peter-river;
+    }
 }

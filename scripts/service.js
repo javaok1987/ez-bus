@@ -72,6 +72,7 @@
   };
 
   TripTaipeiService.query = function(state, callback) {
+    console.log(state)
     var stopsAjax = this.getStops(state, GMap.addStops);
     var tripAreaAjax = this.getTripArea(state, GMap.addGeoJson);
     $.when.apply($, [stopsAjax, tripAreaAjax]).then(function() {
