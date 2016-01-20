@@ -117,7 +117,7 @@
       $('#sidebar-wrapper').toggleClass('active');
     });
 
-    // $('.iui-overlay').find('.btn-close').click(); //test code;
+    // $('.iui-overlay').find('button').click(); //test code;
 
   });
 

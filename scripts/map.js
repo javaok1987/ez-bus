@@ -56,9 +56,6 @@
     });
     self.infowindow.open(self.map, self.centerMarker);
 
-    // google.maps.event.addListener(self.centerMarker, 'dragend', function(event) {
-    //   locationAddress(self.centerMarker.getPosition().lat(), self.centerMarker.getPosition().lng());
-    // });
 
     var centerControlDiv = document.createElement('div');
     var centerControl = new CenterControl(centerControlDiv, self.map);
@@ -78,10 +75,15 @@
       zIndex: 999
     });
 
-    google.maps.event.addListener(self.map, 'idle', function() {
-      self.centerMarker.setPosition(self.map.getCenter());
-      self.centerCircle.setCenter(self.centerMarker.getPosition());
-    });
+    // google.maps.event.addListener(self.centerMarker, 'dragend', function(event) {
+    //   locationAddress(self.centerMarker.getPosition().lat(), self.centerMarker.getPosition().lng());
+    // });
+
+
+    // google.maps.event.addListener(self.map, 'idle', function() {
+    //   self.centerMarker.setPosition(self.map.getCenter());
+    //   self.centerCircle.setCenter(self.centerMarker.getPosition());
+    // });
 
     google.maps.event.addListener(self.centerMarker, 'dragstart', function(event) {
       self.infowindow.close();
