@@ -23,7 +23,7 @@
   $(function($) {
 
     classie.removeClass(document.getElementById('wrapper'), 'hidden');
-
+    FastClick.attach(document.body);
 
     window.alert = swal;
 

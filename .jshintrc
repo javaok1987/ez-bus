@@ -121,7 +121,8 @@
 	"Chart",
 	"GMap",
 	"swal",
-	"TripTaipeiService"
+	"TripTaipeiService",
+	"FastClick"
 	]
 	//,	"indent" : 2 // Specify indentation spacing
 }

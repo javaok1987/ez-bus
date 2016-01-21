@@ -2,7 +2,7 @@
   "name": "ezBus",
   "version": "0.0.1",
   "authors": [
-    "ianliao <javaok1987@gmail.com>"
+    "Ian Liao <javaok1987@gmail.com>"
   ],
   "main": "index.html",
   "license": "MIT",
@@ -16,6 +16,7 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "flat-ui": "~2.2.2",
+    "fastclick": "~1.0.6",
     "bootstrap": "~3.3.5",
     "bootstrap-sweetalert": "~0.4.5",
     "bootstrap-timepicker": "~0.5.2"
