@@ -25,7 +25,6 @@
   };
 
   GMap.initialize = function(callback) {
-    var self = this;
     var latlng = new google.maps.LatLng(25.047750, 121.517371);
     var mapOptions = {
       zoom: 13,
@@ -42,57 +41,56 @@
       styles: [{'featureType':'administrative','elementType':'all','stylers':[{'visibility':'on'},{'lightness':33}]},{'featureType':'administrative','elementType':'labels','stylers':[{'saturation':'-100'}]},{'featureType':'administrative','elementType':'labels.text','stylers':[{'gamma':'0.75'}]},{'featureType':'administrative.neighborhood','elementType':'labels.text.fill','stylers':[{'lightness':'-37'}]},{'featureType':'landscape','elementType':'geometry','stylers':[{'color':'#f9f9f9'}]},{'featureType':'landscape.man_made','elementType':'geometry','stylers':[{'saturation':'-100'},{'lightness':'40'},{'visibility':'off'}]},{'featureType':'landscape.natural','elementType':'labels.text.fill','stylers':[{'saturation':'-100'},{'lightness':'-37'}]},{'featureType':'landscape.natural','elementType':'labels.text.stroke','stylers':[{'saturation':'-100'},{'lightness':'100'},{'weight':'2'}]},{'featureType':'landscape.natural','elementType':'labels.icon','stylers':[{'saturation':'-100'}]},{'featureType':'poi','elementType':'geometry','stylers':[{'saturation':'-100'},{'lightness':'80'}]},{'featureType':'poi','elementType':'labels','stylers':[{'saturation':'-100'},{'lightness':'0'}]},{'featureType':'poi.attraction','elementType':'geometry','stylers':[{'lightness':'-4'},{'saturation':'-100'}]},{'featureType':'poi.park','elementType':'geometry','stylers':[{'color':'#c5dac6'},{'visibility':'on'},{'saturation':'-95'},{'lightness':'62'}]},{'featureType':'poi.park','elementType':'labels','stylers':[{'visibility':'on'},{'lightness':20}]},{'featureType':'road','elementType':'all','stylers':[{'lightness':20}]},{'featureType':'road','elementType':'labels','stylers':[{'saturation':'-100'},{'gamma':'1.00'}]},{'featureType':'road','elementType':'labels.text','stylers':[{'gamma':'0.50'}]},{'featureType':'road','elementType':'labels.icon','stylers':[{'saturation':'-100'},{'gamma':'0.50'}]},{'featureType':'road.highway','elementType':'geometry','stylers':[{'color':'#c5c6c6'},{'saturation':'-100'}]},{'featureType':'road.highway','elementType':'geometry.stroke','stylers':[{'lightness':'-13'}]},{'featureType':'road.highway','elementType':'labels.icon','stylers':[{'lightness':'0'},{'gamma':'1.09'}]},{'featureType':'road.arterial','elementType':'geometry','stylers':[{'color':'#e4d7c6'},{'saturation':'-100'},{'lightness':'47'}]},{'featureType':'road.arterial','elementType':'geometry.stroke','stylers':[{'lightness':'-12'}]},{'featureType':'road.arterial','elementType':'labels.icon','stylers':[{'saturation':'-100'}]},{'featureType':'road.local','elementType':'geometry','stylers':[{'color':'#fbfaf7'},{'lightness':'77'}]},{'featureType':'road.local','elementType':'geometry.fill','stylers':[{'lightness':'-5'},{'saturation':'-100'}]},{'featureType':'road.local','elementType':'geometry.stroke','stylers':[{'saturation':'-100'},{'lightness':'-15'}]},{'featureType':'transit.station.airport','elementType':'geometry','stylers':[{'lightness':'47'},{'saturation':'-100'}]},{'featureType':'water','elementType':'all','stylers':[{'visibility':'on'},{'color':'#acbcc9'}]},{'featureType':'water','elementType':'geometry','stylers':[{'saturation':'53'}]},{'featureType':'water','elementType':'labels.text.fill','stylers':[{'lightness':'-42'},{'saturation':'17'}]},{'featureType':'water','elementType':'labels.text.stroke','stylers':[{'lightness':'61'}]}]
     };
 
-    self.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-    getCurrentLocation(); //定位.
+    // getCurrentLocation(); //定位.
 
-    self.centerMarker = new google.maps.Marker({
+    this.centerMarker = new google.maps.Marker({
       draggable: true,
       position: latlng,
-      map: self.map,
+      map: this.map,
       icon: 'data:image/png;base64,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'
     });
 
-    self.infowindow = new google.maps.InfoWindow({
+    this.infowindow = new google.maps.InfoWindow({
       content: '<p>拖曳我<span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></p>'
     });
-    self.infowindow.open(self.map, self.centerMarker);
+    this.infowindow.open(this.map, this.centerMarker);
 
     var centerControlDiv = document.createElement('div');
-    var centerControl = new CenterControl(centerControlDiv, self.map);
+    var centerControl = new CenterControl(centerControlDiv, this.map);
 
     centerControlDiv.index = 1;
-    self.map.controls[google.maps.ControlPosition.LEFT_CENTER].push(centerControlDiv);
+    this.map.controls[google.maps.ControlPosition.LEFT_CENTER].push(centerControlDiv);
 
-    self.centerCircle = new google.maps.Circle({
+    this.centerCircle = new google.maps.Circle({
       strokeColor: '#2980B9',
       strokeOpacity: 0.8,
       strokeWeight: 2,
       fillColor: '#3498DB',
       fillOpacity: 0.1,
-      map: self.map,
+      map: this.map,
       center: latlng,
       radius: 600,
       zIndex: 999
     });
 
-
-    // google.maps.event.addListener(self.centerMarker, 'dragend', function(event) {
-    //   locationAddress(self.centerMarker.getPosition().lat(), self.centerMarker.getPosition().lng());
+    // google.maps.event.addListener(this.centerMarker, 'dragend', function(event) {
+    //   locationAddress(this.centerMarker.getPosition().lat(), this.centerMarker.getPosition().lng());
     // });
 
-    // google.maps.event.addListener(self.map, 'idle', function() {
-    //   self.centerMarker.setPosition(self.map.getCenter());
-    //   self.centerCircle.setCenter(self.centerMarker.getPosition());
+    // google.maps.event.addListener(this.map, 'idle', function() {
+    //   this.centerMarker.setPosition(this.map.getCenter());
+    //   this.centerCircle.setCenter(this.centerMarker.getPosition());
     // });
 
-    google.maps.event.addListener(self.centerMarker, 'dragstart', function(event) {
-      self.infowindow.close();
-    });
+    google.maps.event.addListener(this.centerMarker, 'dragstart', function(event) {
+      this.infowindow.close();
+    }.bind(this));
 
-    google.maps.event.addListener(self.centerMarker, 'drag', function(event) {
-      self.centerCircle.setCenter(self.centerMarker.getPosition());
-    });
+    google.maps.event.addListener(this.centerMarker, 'drag', function(event) {
+      this.centerCircle.setCenter(this.centerMarker.getPosition());
+    }.bind(this));
 
     (callback && typeof(callback) === 'function') && callback();
   };
@@ -189,14 +187,12 @@
   };
 
   var setMarkerInfoWindow = function(marker, stopName) {
-    var self = marker;
-    self.addListener('click', function() {
-      GMap.infowindow.setOptions({
+    marker.addListener('click', function() {
+      this.infowindow.setOptions({
         content: '<p>' + stopName + '</p>'
       });
-      GMap.infowindow.open(GMap.map, self);
-
-    });
+      this.infowindow.open(this.map, marker);
+    }.bind(GMap));
   };
 
   GMap.clearMap = function(type) {
@@ -232,14 +228,14 @@
     if (stopsAry) {
       for (var i = stopsAry.length - 1; i >= 0; i--) {
         if (stopsAry[i].type === type) {
-          stopsAry[i].setMap(state ? GMap.map : null);
+          stopsAry[i].setMap(state ? this.map : null);
         }
       }
     }
-  };
+  }.bind(GMap);
 
   GMap.addStops = function(data) {
-    GMap.clearMap('Stop');
+    this.clearMap('Stop');
     if (data.result.length > 0) {
       for (var i = data.result.length - 1; i >= 0; i--) {
         var _fillColor = '';
@@ -273,7 +269,7 @@
             strokeColor: 'white',
             strokeWeight: 0.5
           },
-          map: GMap.level[_type] ? GMap.map : null,
+          map: this.level[_type] ? this.map : null,
           type: _type,
           position: {
             lat: parseFloat(data.result[i].lat),
@@ -285,10 +281,10 @@
         setMarkerInfoWindow(_marker, _title + data.result[i].name);
       }
     }
-  };
+  }.bind(GMap);
 
   GMap.addGeoJson = function(data) {
-    GMap.clearMap('GeoJson');
+    this.clearMap('GeoJson');
     if (!jQuery.isEmptyObject(data)) {
       mrtLayer.setStyle({
         fillColor: '#2980b9',
@@ -336,12 +332,12 @@
         // ubikeLayer.setPaths(jQuery.parseJSON(data.result.Y)[0].coordinates);
       }
 
-      busLayer.setMap(GMap.map);
-      mrtLayer.setMap(GMap.map);
-      traLayer.setMap(GMap.map);
-      ubikeLayer.setMap(GMap.map);
+      busLayer.setMap(this.map);
+      mrtLayer.setMap(this.map);
+      traLayer.setMap(this.map);
+      ubikeLayer.setMap(this.map);
     }
-  };
+  }.bind(GMap);
 
   // transport
   if (typeof define === 'function' && define.amd) {
