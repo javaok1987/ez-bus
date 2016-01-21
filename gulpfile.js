@@ -82,9 +82,13 @@ gulp.task('default', ['clean'], function() {
   gulp.start('html', 'sass', 'scripts', 'server', 'watch');
 });
 
+// Compile Task.
+gulp.task('compile', ['clean'], function() {
+  gulp.start('sass', 'scripts');
+});
+
 // Deploy Task.
 gulp.task('deploy', function() {
-  return gulp.src(config.appPath + '**/*')
-    .pipe(plugins.ghPages());
-
+  gulp.start('sass', 'scripts');
+  return gulp.src(config.appPath + '**/*').pipe(plugins.ghPages());
 });
