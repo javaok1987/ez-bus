@@ -81,10 +81,10 @@
     //   locationAddress(self.centerMarker.getPosition().lat(), self.centerMarker.getPosition().lng());
     // });
 
-    google.maps.event.addListener(self.map, 'idle', function() {
-      self.centerMarker.setPosition(self.map.getCenter());
-      self.centerCircle.setCenter(self.centerMarker.getPosition());
-    });
+    // google.maps.event.addListener(self.map, 'idle', function() {
+    //   self.centerMarker.setPosition(self.map.getCenter());
+    //   self.centerCircle.setCenter(self.centerMarker.getPosition());
+    // });
 
     google.maps.event.addListener(self.centerMarker, 'dragstart', function(event) {
       self.infowindow.close();

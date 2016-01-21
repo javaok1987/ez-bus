@@ -40,9 +40,12 @@
           google.maps.event.trigger(GMap.map, 'resize');
         });
 
-        google.maps.event.addListener(GMap.map, 'idle', function() {
+        google.maps.event.addListenerOnce(GMap.map, 'idle', function() {
           state.latitude = GMap.centerMarker.getPosition().lat();
           state.longitude = GMap.centerMarker.getPosition().lng();
+        });
+
+        google.maps.event.addListenerOnce(GMap.map, 'idle', function() {
           $('#overlay').slideUp('slow');
         });
 
@@ -57,7 +60,7 @@
           TripTaipeiService.query(state, setQueryResult);
         });
         state.weekType = new Date().getDay();
-        $(weekly[state.weekType - 1]).addClass('active'); //判斷星期別.
+        $(weekly[state.weekType - 1]).addClass('active'); //設定星期別.
 
         $wrapper.find('#article-conveyance>[data-toggle="checkbox"]').on('change.radiocheck', function(ele) {
           state.transitType = '';
@@ -114,9 +117,9 @@
     $('#timepicker').timepicker({
       defaultTime: '08:00 AM',
       disableFocus: false,
-      showMeridian:false
+      showMeridian: false
     }).on('hide.timepicker', function(e) {
-      var _selectTime =  e.time.value;
+      var _selectTime = e.time.value;
       if (e.time.hours < 10) {
         _selectTime = '0' + _selectTime;
       }
