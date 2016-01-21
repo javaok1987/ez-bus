@@ -200,7 +200,7 @@ String.prototype.repeat = function(num) {
   $(function($) {
 
     classie.removeClass(document.getElementById('wrapper'), 'hidden');
-
+    FastClick.attach(document.body);
 
     window.alert = swal;
 
@@ -232,8 +232,7 @@ String.prototype.repeat = function(num) {
           TripTaipeiService.query(state, setQueryResult);
         });
 
-        var weekly = $('#weekly
-').find('.btn').on('click', function() {
+        var weekly = $('#weekly').find('.btn').on('click', function() {
           state.weekType = $(this).data('index');
           TripTaipeiService.query(state, setQueryResult);
         });
