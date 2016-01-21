@@ -31,9 +31,6 @@
 
       pauseVideo();
 
-      classie.removeClass(document.getElementById('businfo-panal'), 'hidden');
-      classie.removeClass(document.getElementById('menu-toggle'), 'hidden');
-
       GMap.initialize(function() {
 
         $(window).resize(function(argument) {
@@ -47,6 +44,8 @@
 
         google.maps.event.addListenerOnce(GMap.map, 'idle', function() {
           $('#overlay').slideUp('slow');
+          classie.removeClass(document.getElementById('businfo-panal'), 'hidden');
+          classie.removeClass(document.getElementById('menu-toggle'), 'hidden');
         });
 
         google.maps.event.addListener(GMap.centerMarker, 'dragend', function(event) {
