@@ -202,9 +202,11 @@ video#bgvid {
   z-index: 9;
   top: 0;
   right: 0; }
+  #menu-toggle:hover {
+    color: #1abc9c; }
 
-#menu-toggle:hover {
-  color: #7f8c8d; }
+#menu-toggle, #menu-close {
+  font-size: 25px; }
 
 #article-conveyance label {
   margin-left: 20px; }
