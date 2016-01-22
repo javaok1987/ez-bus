@@ -433,6 +433,7 @@ String.prototype.repeat = function(num) {
    */
   var locationAddress = function(latitude, longitude) {
     GMap.map.setCenter(new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude)));
+    GMap.map.setZoom(14);
     // console.log('定位完成！');
   };
 
