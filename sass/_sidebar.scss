@@ -73,9 +73,14 @@
     right: 0;
 }
 
-#menu-toggle:hover
+#menu-toggle,
+#menu-close
 {
-    color: #7f8c8d;
+    font-size: 25px;
+    &:hover
+    {
+        color: $turquoise;
+    }
 }
 
 #article-conveyance
