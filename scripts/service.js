@@ -5,7 +5,7 @@
   'use strict';
 
   var Urls = {
-    domain: 'http://207.46.231.69/TripTaipei'
+    domain: 'http://demo.datarget.com.tw/TripTaipei'
   };
 
   Urls.getStops = Urls.domain + '/stops/getStops/#{lng}/#{lat}/#{distance}/#{type}';
@@ -15,6 +15,8 @@
 
   TripTaipeiService.getStops = function(state, callback) {
     return $.ajax({
+      // url:'../data/stops.json',
+      // dataType: 'json',
       url: Urls.getStops.replace('#{lng}', state.longitude).replace('#{lat}', state.latitude).replace('#{distance}', state.walkDistance).replace('#{type}', state.transitType),
       jsonp: 'callback',
       dataType: 'jsonp',
@@ -35,9 +37,10 @@
 
   TripTaipeiService.getTripArea = function(state, callback) {
     return $.ajax({
+      // url:'../data/tripArea.json',
+      // dataType: 'json',
       url: Urls.getTripArea,
       jsonp: 'callback',
-      type: 'POST',
       dataType: 'jsonp',
       data: {
         lat: state.latitude,
@@ -48,21 +51,22 @@
         startTime: state.startTime,
         transitType: state.transitType
       },
-      beforeSend: function() {
+      beforeSend: function(xhr) {
         classie.removeClass(document.getElementById('pageBlock'), 'hidden');
       },
       complete: function() {
         classie.addClass(document.getElementById('pageBlock'), 'hidden');
       },
       success: function(response) {
+        console.log(response.result.BUSAREA)
         if (jQuery.isEmptyObject(response)) {
           swal({
             title: "Sorry!",
             text: "設定條件內 無大眾運輸資料",
           });
         }
-        state.result.area = '689';
-        state.result.level = 'A';
+        state.result.area = response.result.BUSAREA;
+        state.result.level = response.result.BUSSERVICE;
         (callback && typeof(callback) === "function") && callback(response);
       },
       error: function(error) {
