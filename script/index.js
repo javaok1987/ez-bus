@@ -140,7 +140,7 @@
     var vid = document.getElementById('bgvid');
     vid.pause();
     vid.addEventListener('ended', function() {
-      // only functional if "loop" is removed 
+      // only functional if "loop" is removed
       vid.pause();
       // to capture IE10
       vid.classList.add('stopfade');

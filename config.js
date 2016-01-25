@@ -1,5 +1,8 @@
 module.exports = {
-  appPath: "./app/",
-  scriptPath:"./scripts/",
-  stylePath:"./sass/"
+  dist: "./app/",
+  src: {
+    html:"./html/",
+    script: "./script/",
+    style: "./sass/"
+  }
 };

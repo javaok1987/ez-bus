@@ -58,7 +58,6 @@
         classie.addClass(document.getElementById('pageBlock'), 'hidden');
       },
       success: function(response) {
-        console.log(response.result.BUSAREA)
         if (jQuery.isEmptyObject(response)) {
           swal({
             title: "Sorry!",
