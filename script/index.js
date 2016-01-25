@@ -61,21 +61,29 @@
         state.weekType = new Date().getDay();
         $(weekly[state.weekType - 1]).addClass('active'); //設定星期別.
 
-        $wrapper.find('#article-conveyance>[data-toggle="checkbox"]').on('change.radiocheck', function(ele) {
-          state.transitType = '';
+        $wrapper.find('#article-conveyance [data-toggle="checkbox"]').on('change', function(ele) {
+          var _transitType = '';
           if ($('#bus').prop('checked')) {
-            state.transitType += 'B';
+            _transitType += 'B';
           }
           if ($('#mrt').prop('checked')) {
-            state.transitType += 'M';
+            _transitType += 'M';
           }
           if ($('#train').prop('checked')) {
-            state.transitType += 'T';
+            _transitType += 'T';
           }
           if ($('#youbike').prop('checked')) {
-            state.transitType += 'Y';
+            _transitType += 'Y';
           }
-          TripTaipeiService.query(state, setQueryResult);
+
+          if (_transitType === '') {
+            window.alert('請至少選擇一種交通工具');
+            $wrapper.find('#article-conveyance [data-toggle="checkbox"]').prop('checked', true);
+            state.transitType = 'BYTM';
+          } else {
+            state.transitType = _transitType;
+            TripTaipeiService.query(state, setQueryResult);
+          }
         });
 
         $walkSlider.on('slidestop', function(event, ui) {

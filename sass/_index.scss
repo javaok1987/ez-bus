@@ -94,6 +94,10 @@ body
     text-align: center;
 
     color: $inverse;
+    .text-muted
+    {
+        color: $inverse;
+    }
 }
 
 .iui-content
@@ -160,10 +164,7 @@ body
     }
 }
 
-.text-muted
-{
-    color: $inverse;
-}
+
 
 #businfo-panal
 {
