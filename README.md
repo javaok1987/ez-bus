@@ -1,4 +1,4 @@
-# ez-bus
+# EZ Bus
 
 
 Taipei OMG 綠色交通應用開發大賽：[連結](https://taipeiomg.bhuntr.com/)
