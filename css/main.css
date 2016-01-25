@@ -60,6 +60,8 @@ body {
   height: 100%;
   text-align: center;
   color: white; }
+  .iui-modal .text-muted {
+    color: white; }
 
 .iui-content {
   width: 90%;
@@ -99,9 +101,6 @@ body {
   background: rgba(255, 255, 255, 0.23); }
   #overlay-mdl button:hover {
     background: rgba(0, 0, 0, 0.5); }
-
-.text-muted {
-  color: white; }
 
 #businfo-panal {
   font-family: apercubold;
