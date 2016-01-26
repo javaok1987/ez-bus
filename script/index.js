@@ -139,12 +139,12 @@
 
   });
 
-  var setQueryResult = function(state) {
+  function setQueryResult(state) {
     $('#service-area').text(state.result.area);
     $('#service-level').text(state.result.level);
   };
 
-  var pauseVideo = function() {
+  function pauseVideo() {
     var vid = document.getElementById('bgvid');
     vid.pause();
     vid.addEventListener('ended', function() {

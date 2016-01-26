@@ -44,3 +44,4 @@ app/css
 app/js
 
 .publish/
+app/*.html

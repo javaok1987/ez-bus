@@ -13,6 +13,17 @@
 
   var TripTaipeiService = {};
 
+  function showErrorMessage(argument) {
+    if (swal) {
+      swal({
+        title: 'Oops!',
+        text: '設定條件內無大眾運輸資料.',
+      });
+    } else {
+      window.alert('設定條件內無大眾運輸資料.');
+    }
+  };
+
   TripTaipeiService.getStops = function(state, callback) {
     return $.ajax({
       // url:'../data/stops.json',
@@ -22,10 +33,7 @@
       dataType: 'jsonp',
       success: function(response) {
         if (response.result === '0') {
-          swal({
-            title: 'Oops!',
-            text: '設定條件內無大眾運輸資料.',
-          });
+          showErrorMessage();
         }
         (callback && typeof(callback) === "function") && callback(response);
       },
@@ -59,10 +67,9 @@
       },
       success: function(response) {
         if (jQuery.isEmptyObject(response)) {
-          swal({
-            title: "Sorry!",
-            text: "設定條件內 無大眾運輸資料",
-          });
+          state.result.area = '0';
+          state.result.level = 'A';
+          return false;
         }
         state.result.area = response.result.BUSAREA;
         state.result.level = response.result.BUSSERVICE;
