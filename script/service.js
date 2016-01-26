@@ -22,7 +22,7 @@
     } else {
       window.alert('設定條件內無大眾運輸資料.');
     }
-  };
+  }
 
   TripTaipeiService.getStops = function(state, callback) {
     return $.ajax({
@@ -35,7 +35,7 @@
         if (response.result === '0') {
           showErrorMessage();
         }
-        (callback && typeof(callback) === "function") && callback(response);
+        (callback && typeof(callback) === "function") && callback(response, state.transitType);
       },
       error: function(error) {
         console.error(error);
@@ -82,11 +82,11 @@
   };
 
   TripTaipeiService.query = function(state, callback) {
-    console.log(state)
+    console.log(state);
     var stopsAjax = this.getStops(state, GMap.addStops);
     var tripAreaAjax = this.getTripArea(state, GMap.addGeoJson);
     $.when.apply($, [stopsAjax, tripAreaAjax]).then(function() {
-      (callback && typeof(callback) === "function") && callback(state);
+      (callback && typeof(callback) === "function") && callback();
     });
   };
 

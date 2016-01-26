@@ -83,13 +83,6 @@
     }
 }
 
-#article-conveyance
-{
-    label
-    {
-        margin-left: 20px;
-    }
-}
 
 #article-form-time
 {
@@ -143,21 +136,25 @@
 
 #article-conveyance
 {
-    label:nth-child(2)
+    ul
     {
-        color: $belize-hole;
-    }
-    label:nth-child(3)
-    {
-        color: $green-sea;
-    }
-    label:nth-child(4)
-    {
-        color: $pomegranate;
-    }
-    label:nth-child(5)
-    {
-        color: $orange;
+        margin-left: 20px;
+        li:nth-child(1)
+        {
+            color: $green-sea;
+        }
+        li:nth-child(2)
+        {
+            color: $belize-hole;
+        }
+        li:nth-child(3)
+        {
+            color: $pomegranate;
+        }
+        li:nth-child(4)
+        {
+            color: $orange;
+        }
     }
 }
 

@@ -51,62 +51,43 @@
         google.maps.event.addListener(GMap.centerMarker, 'dragend', function(event) {
           state.latitude = GMap.centerMarker.getPosition().lat();
           state.longitude = GMap.centerMarker.getPosition().lng();
-          TripTaipeiService.query(state, setQueryResult);
+          query();
         });
 
         var weekly = $('#weekly').find('.btn').on('click', function() {
           state.weekType = $(this).data('index');
-          TripTaipeiService.query(state, setQueryResult);
+          query();
         });
         state.weekType = new Date().getDay();
         $(weekly[state.weekType - 1]).addClass('active'); //設定星期別.
-
-        $wrapper.find('#article-conveyance [data-toggle="checkbox"]').on('change', function(ele) {
-          var _transitType = '';
-          if ($('#bus').prop('checked')) {
-            _transitType += 'B';
-          }
-          if ($('#mrt').prop('checked')) {
-            _transitType += 'M';
-          }
-          if ($('#train').prop('checked')) {
-            _transitType += 'T';
-          }
-          if ($('#youbike').prop('checked')) {
-            _transitType += 'Y';
-          }
-
-          if (_transitType === '') {
-            window.alert('請至少選擇一種交通工具');
-            $wrapper.find('#article-conveyance [data-toggle="checkbox"]').prop('checked', true);
-            state.transitType = 'BYTM';
-          } else {
-            state.transitType = _transitType;
-            TripTaipeiService.query(state, setQueryResult);
-          }
-        });
 
         $walkSlider.on('slidestop', function(event, ui) {
           state.walkDistance = $walkSlider.find('.ui-slider-value:last').data('slidervalue');
           GMap.centerCircle.setOptions({
             radius: state.walkDistance
           });
-          TripTaipeiService.query(state, setQueryResult);
+          query();
         });
 
         $slider.on('slidestop', function(event, ui) {
           state.tripTime = $slider.find('.ui-slider-value:last').data('slidervalue');
-          TripTaipeiService.query(state, setQueryResult);
+          query();
         });
 
       });
 
     });
 
-    $('[data-toggle="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+    $wrapper.find('#article-conveyance [data-toggle="switch"]').on('switchChange.bootstrapSwitch', function(event, checked) {
       var $switch = $(event.target);
-      GMap.checkStop($switch.prop('value'), state);
-      GMap.level[$switch.val()] = state;
+      var _transitType = state.transitType;
+      if (checked && _transitType.indexOf($switch.val()) === -1) {
+        _transitType += $switch.val();
+      } else {
+        _transitType = _transitType.replace($switch.val(), '');
+      }
+      state.transitType = _transitType;
+      query();
     });
 
     // Closes the sidebar menu
@@ -131,7 +112,7 @@
         _selectTime = '0' + _selectTime;
       }
       state.startTime = _selectTime.replace(':', '');
-      TripTaipeiService.query(state, setQueryResult);
+      query();
     });
 
     // $('.iui-overlay').find('button').click(); //test code;
@@ -139,10 +120,10 @@
 
   });
 
-  function setQueryResult(state) {
+  function setQueryResult() {
     $('#service-area').text(state.result.area);
     $('#service-level').text(state.result.level);
-  };
+  }
 
   function pauseVideo() {
     var vid = document.getElementById('bgvid');
@@ -153,6 +134,15 @@
       // to capture IE10
       vid.classList.add('stopfade');
     });
-  };
+  }
+
+  function query() {
+    if (state.transitType.length > 0) {
+      TripTaipeiService.query(state, setQueryResult);
+    } else {
+      window.alert('請至少選擇一種交通工具');
+      GMap.clearMap();
+    }
+  }
 
 })(jQuery);

@@ -15,13 +15,7 @@
     map: {},
     centerMarker: {},
     centerCircle: {},
-    infowindow: {},
-    level: {
-      B: true,
-      Y: true,
-      T: true,
-      M: true
-    }
+    infowindow: {}
   };
 
   GMap.initialize = function(callback) {
@@ -200,7 +194,8 @@
   };
 
   GMap.clearMap = function(type) {
-    var cleanStops = function(argument) {
+
+    function cleanStops(argument) {
       if (stopsAry) {
         for (var i = stopsAry.length - 1; i >= 0; i--) {
           stopsAry[i].setMap(null);
@@ -208,7 +203,8 @@
         stopsAry.length = 0;
       }
     }
-    var cleanGeoJson = function(argument) {
+
+    function cleanGeoJson(argument) {
       busLayer.forEach(function(feature) {
         busLayer.remove(feature);
       });
@@ -225,6 +221,7 @@
         ubikeLayer.remove(feature);
       });
     }
+
     switch (type) {
       case 'Stop':
         cleanStops();
@@ -236,63 +233,56 @@
         cleanStops();
         cleanGeoJson();
     }
+    
   };
 
-  GMap.checkStop = function(type, state) {
-    if (stopsAry) {
-      for (var i = stopsAry.length - 1; i >= 0; i--) {
-        if (stopsAry[i].type === type) {
-          stopsAry[i].setMap(state ? this.map : null);
-        }
-      }
-    }
-  }.bind(GMap);
-
-  GMap.addStops = function(data) {
+  GMap.addStops = function(data, type) {
     this.clearMap('Stop');
     if (data.result.length > 0) {
       for (var i = data.result.length - 1; i >= 0; i--) {
         var _fillColor = '';
         var _title = '';
         var _type = data.result[i].type;
-        switch (_type) {
-          case 'M':
-            _fillColor = '#2980b9';
-            _title = '捷運站: ';
-            break;
-          case 'B':
-            _fillColor = '#16a085';
-            _title = '客運站: ';
-            break;
-          case 'T':
-            _fillColor = '#c0392b';
-            _title = '火車站: ';
-            break;
-          case 'Y':
-            _fillColor = '#f39c12';
-            _title = 'YouBike: ';
-            break;
-        }
-
-        var _marker = new google.maps.Marker({
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: _fillColor,
-            fillOpacity: 1,
-            scale: 4.5,
-            strokeColor: 'white',
-            strokeWeight: 0.5
-          },
-          map: this.level[_type] ? this.map : null,
-          type: _type,
-          position: {
-            lat: parseFloat(data.result[i].lat),
-            lng: parseFloat(data.result[i].lng),
+        if (type.indexOf(_type) > -1) {
+          switch (_type) {
+            case 'M':
+              _fillColor = '#2980b9';
+              _title = '捷運站: ';
+              break;
+            case 'B':
+              _fillColor = '#16a085';
+              _title = '客運站: ';
+              break;
+            case 'T':
+              _fillColor = '#c0392b';
+              _title = '火車站: ';
+              break;
+            case 'Y':
+              _fillColor = '#f39c12';
+              _title = 'YouBike: ';
+              break;
           }
-        });
 
-        stopsAry.push(_marker);
-        setMarkerInfoWindow(_marker, _title + data.result[i].name);
+          var _marker = new google.maps.Marker({
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: _fillColor,
+              fillOpacity: 1,
+              scale: 4.5,
+              strokeColor: 'white',
+              strokeWeight: 0.5
+            },
+            map: this.map,
+            type: _type,
+            position: {
+              lat: parseFloat(data.result[i].lat),
+              lng: parseFloat(data.result[i].lng),
+            }
+          });
+
+          stopsAry.push(_marker);
+          setMarkerInfoWindow(_marker, _title + data.result[i].name);
+        }
       }
     }
   }.bind(GMap);
