@@ -263,9 +263,6 @@ video#bgvid {
   #menu-close:hover {
     color: #1abc9c; }
 
-#article-conveyance label {
-  margin-left: 20px; }
-
 #article-form-time {
   width: 100%;
   text-align: center; }
@@ -292,17 +289,16 @@ video#bgvid {
   background-color: #ecf0f1; }
 
 /* 交通工具 */
-#article-conveyance label:nth-child(2) {
-  color: #2980b9; }
-
-#article-conveyance label:nth-child(3) {
-  color: #16a085; }
-
-#article-conveyance label:nth-child(4) {
-  color: #c0392b; }
-
-#article-conveyance label:nth-child(5) {
-  color: #f39c12; }
+#article-conveyance ul {
+  margin-left: 20px; }
+  #article-conveyance ul li:nth-child(1) {
+    color: #16a085; }
+  #article-conveyance ul li:nth-child(2) {
+    color: #2980b9; }
+  #article-conveyance ul li:nth-child(3) {
+    color: #c0392b; }
+  #article-conveyance ul li:nth-child(4) {
+    color: #f39c12; }
 
 /*出發時間*/
 #select-form-time {

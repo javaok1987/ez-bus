@@ -227,62 +227,43 @@ String.prototype.repeat = function(num) {
         google.maps.event.addListener(GMap.centerMarker, 'dragend', function(event) {
           state.latitude = GMap.centerMarker.getPosition().lat();
           state.longitude = GMap.centerMarker.getPosition().lng();
-          TripTaipeiService.query(state, setQueryResult);
+          query();
         });
 
         var weekly = $('#weekly').find('.btn').on('click', function() {
           state.weekType = $(this).data('index');
-          TripTaipeiService.query(state, setQueryResult);
+          query();
         });
         state.weekType = new Date().getDay();
         $(weekly[state.weekType - 1]).addClass('active'); //設定星期別.
-
-        $wrapper.find('#article-conveyance [data-toggle="checkbox"]').on('change', function(ele) {
-          var _transitType = '';
-          if ($('#bus').prop('checked')) {
-            _transitType += 'B';
-          }
-          if ($('#mrt').prop('checked')) {
-            _transitType += 'M';
-          }
-          if ($('#train').prop('checked')) {
-            _transitType += 'T';
-          }
-          if ($('#youbike').prop('checked')) {
-            _transitType += 'Y';
-          }
-
-          if (_transitType === '') {
-            window.alert('請至少選擇一種交通工具');
-            $wrapper.find('#article-conveyance [data-toggle="checkbox"]').prop('checked', true);
-            state.transitType = 'BYTM';
-          } else {
-            state.transitType = _transitType;
-            TripTaipeiService.query(state, setQueryResult);
-          }
-        });
 
         $walkSlider.on('slidestop', function(event, ui) {
           state.walkDistance = $walkSlider.find('.ui-slider-value:last').data('slidervalue');
           GMap.centerCircle.setOptions({
             radius: state.walkDistance
           });
-          TripTaipeiService.query(state, setQueryResult);
+          query();
         });
 
         $slider.on('slidestop', function(event, ui) {
           state.tripTime = $slider.find('.ui-slider-value:last').data('slidervalue');
-          TripTaipeiService.query(state, setQueryResult);
+          query();
         });
 
       });
 
     });
 
-    $('[data-toggle="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+    $wrapper.find('#article-conveyance [data-toggle="switch"]').on('switchChange.bootstrapSwitch', function(event, checked) {
       var $switch = $(event.target);
-      GMap.checkStop($switch.prop('value'), state);
-      GMap.level[$switch.val()] = state;
+      var _transitType = state.transitType;
+      if (checked && _transitType.indexOf($switch.val()) === -1) {
+        _transitType += $switch.val();
+      } else {
+        _transitType = _transitType.replace($switch.val(), '');
+      }
+      state.transitType = _transitType;
+      query();
     });
 
     // Closes the sidebar menu
@@ -307,7 +288,7 @@ String.prototype.repeat = function(num) {
         _selectTime = '0' + _selectTime;
       }
       state.startTime = _selectTime.replace(':', '');
-      TripTaipeiService.query(state, setQueryResult);
+      query();
     });
 
     // $('.iui-overlay').find('button').click(); //test code;
@@ -315,10 +296,10 @@ String.prototype.repeat = function(num) {
 
   });
 
-  function setQueryResult(state) {
+  function setQueryResult() {
     $('#service-area').text(state.result.area);
     $('#service-level').text(state.result.level);
-  };
+  }
 
   function pauseVideo() {
     var vid = document.getElementById('bgvid');
@@ -329,7 +310,16 @@ String.prototype.repeat = function(num) {
       // to capture IE10
       vid.classList.add('stopfade');
     });
-  };
+  }
+
+  function query() {
+    if (state.transitType.length > 0) {
+      TripTaipeiService.query(state, setQueryResult);
+    } else {
+      window.alert('請至少選擇一種交通工具');
+      GMap.clearMap();
+    }
+  }
 
 })(jQuery);
 
@@ -350,13 +340,7 @@ String.prototype.repeat = function(num) {
     map: {},
     centerMarker: {},
     centerCircle: {},
-    infowindow: {},
-    level: {
-      B: true,
-      Y: true,
-      T: true,
-      M: true
-    }
+    infowindow: {}
   };
 
   GMap.initialize = function(callback) {
@@ -535,7 +519,8 @@ String.prototype.repeat = function(num) {
   };
 
   GMap.clearMap = function(type) {
-    var cleanStops = function(argument) {
+
+    function cleanStops(argument) {
       if (stopsAry) {
         for (var i = stopsAry.length - 1; i >= 0; i--) {
           stopsAry[i].setMap(null);
@@ -543,7 +528,8 @@ String.prototype.repeat = function(num) {
         stopsAry.length = 0;
       }
     }
-    var cleanGeoJson = function(argument) {
+
+    function cleanGeoJson(argument) {
       busLayer.forEach(function(feature) {
         busLayer.remove(feature);
       });
@@ -560,6 +546,7 @@ String.prototype.repeat = function(num) {
         ubikeLayer.remove(feature);
       });
     }
+
     switch (type) {
       case 'Stop':
         cleanStops();
@@ -571,63 +558,56 @@ String.prototype.repeat = function(num) {
         cleanStops();
         cleanGeoJson();
     }
+    
   };
 
-  GMap.checkStop = function(type, state) {
-    if (stopsAry) {
-      for (var i = stopsAry.length - 1; i >= 0; i--) {
-        if (stopsAry[i].type === type) {
-          stopsAry[i].setMap(state ? this.map : null);
-        }
-      }
-    }
-  }.bind(GMap);
-
-  GMap.addStops = function(data) {
+  GMap.addStops = function(data, type) {
     this.clearMap('Stop');
     if (data.result.length > 0) {
       for (var i = data.result.length - 1; i >= 0; i--) {
         var _fillColor = '';
         var _title = '';
         var _type = data.result[i].type;
-        switch (_type) {
-          case 'M':
-            _fillColor = '#2980b9';
-            _title = '捷運站: ';
-            break;
-          case 'B':
-            _fillColor = '#16a085';
-            _title = '客運站: ';
-            break;
-          case 'T':
-            _fillColor = '#c0392b';
-            _title = '火車站: ';
-            break;
-          case 'Y':
-            _fillColor = '#f39c12';
-            _title = 'YouBike: ';
-            break;
-        }
-
-        var _marker = new google.maps.Marker({
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: _fillColor,
-            fillOpacity: 1,
-            scale: 4.5,
-            strokeColor: 'white',
-            strokeWeight: 0.5
-          },
-          map: this.level[_type] ? this.map : null,
-          type: _type,
-          position: {
-            lat: parseFloat(data.result[i].lat),
-            lng: parseFloat(data.result[i].lng),
+        if (type.indexOf(_type) > -1) {
+          switch (_type) {
+            case 'M':
+              _fillColor = '#2980b9';
+              _title = '捷運站: ';
+              break;
+            case 'B':
+              _fillColor = '#16a085';
+              _title = '客運站: ';
+              break;
+            case 'T':
+              _fillColor = '#c0392b';
+              _title = '火車站: ';
+              break;
+            case 'Y':
+              _fillColor = '#f39c12';
+              _title = 'YouBike: ';
+              break;
           }
-        });
 
-        stopsAry.push(_marker);
-        setMarkerInfoWindow(_marker, _title + data.result[i].name);
+          var _marker = new google.maps.Marker({
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: _fillColor,
+              fillOpacity: 1,
+              scale: 4.5,
+              strokeColor: 'white',
+              strokeWeight: 0.5
+            },
+            map: this.map,
+            type: _type,
+            position: {
+              lat: parseFloat(data.result[i].lat),
+              lng: parseFloat(data.result[i].lng),
+            }
+          });
+
+          stopsAry.push(_marker);
+          setMarkerInfoWindow(_marker, _title + data.result[i].name);
+        }
       }
     }
   }.bind(GMap);
@@ -726,7 +706,7 @@ String.prototype.repeat = function(num) {
     } else {
       window.alert('設定條件內無大眾運輸資料.');
     }
-  };
+  }
 
   TripTaipeiService.getStops = function(state, callback) {
     return $.ajax({
@@ -739,7 +719,7 @@ String.prototype.repeat = function(num) {
         if (response.result === '0') {
           showErrorMessage();
         }
-        (callback && typeof(callback) === "function") && callback(response);
+        (callback && typeof(callback) === "function") && callback(response, state.transitType);
       },
       error: function(error) {
         console.error(error);
@@ -786,11 +766,11 @@ String.prototype.repeat = function(num) {
   };
 
   TripTaipeiService.query = function(state, callback) {
-    console.log(state)
+    console.log(state);
     var stopsAjax = this.getStops(state, GMap.addStops);
     var tripAreaAjax = this.getTripArea(state, GMap.addGeoJson);
     $.when.apply($, [stopsAjax, tripAreaAjax]).then(function() {
-      (callback && typeof(callback) === "function") && callback(state);
+      (callback && typeof(callback) === "function") && callback();
     });
   };
 
