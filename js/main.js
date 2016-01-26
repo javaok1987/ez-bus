@@ -387,7 +387,7 @@ String.prototype.repeat = function(num) {
       draggable: true,
       position: latlng,
       map: this.map,
-      icon: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIyNCIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6Y2M9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL25zIyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTEwMjguNCkiPjxwYXRoIGQ9Im0xMi4wMzEgMTAzMC40Yy0zLjg2NTcgMC02Ljk5OTggMy4xLTYuOTk5OCA3IDAgMS4zIDAuNDAxNyAyLjYgMS4wOTM4IDMuNyAwLjAzMzQgMC4xIDAuMDU5IDAuMSAwLjA5MzggMC4ybDQuMzQzMiA4YzAuMjA0IDAuNiAwLjc4MiAxLjEgMS40MzggMS4xczEuMjAyLTAuNSAxLjQwNi0xLjFsNC44NDQtOC43YzAuNDk5LTEgMC43ODEtMi4xIDAuNzgxLTMuMiAwLTMuOS0zLjEzNC03LTctN3ptLTAuMDMxIDMuOWMxLjkzMyAwIDMuNSAxLjYgMy41IDMuNSAwIDItMS41NjcgMy41LTMuNSAzLjVzLTMuNS0xLjUtMy41LTMuNWMwLTEuOSAxLjU2Ny0zLjUgMy41LTMuNXoiIGZpbGw9IiNjMDM5MmIiLz48cGF0aCBkPSJtMTIuMDMxIDEuMDMxMmMtMy44NjU3IDAtNi45OTk4IDMuMTM0LTYuOTk5OCA3IDAgMS4zODMgMC40MDE3IDIuNjY0OCAxLjA5MzggMy43NDk4IDAuMDMzNCAwLjA1MyAwLjA1OSAwLjEwNSAwLjA5MzggMC4xNTdsNC4zNDMyIDguMDYyYzAuMjA0IDAuNTg2IDAuNzgyIDEuMDMxIDEuNDM4IDEuMDMxczEuMjAyLTAuNDQ1IDEuNDA2LTEuMDMxbDQuODQ0LTguNzVjMC40OTktMC45NjMgMC43ODEtMi4wNiAwLjc4MS0zLjIxODggMC0zLjg2Ni0zLjEzNC03LTctN3ptLTAuMDMxIDMuOTY4OGMxLjkzMyAwIDMuNSAxLjU2NyAzLjUgMy41cy0xLjU2NyAzLjUtMy41IDMuNS0zLjUtMS41NjctMy41LTMuNSAxLjU2Ny0zLjUgMy41LTMuNXoiIGZpbGw9IiNlNzRjM2MiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMTAyOC40KSIvPjwvZz48L3N2Zz4='
+      icon: 'data:image/png;base64,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'
     });
 
     this.infowindow = new google.maps.InfoWindow({
@@ -396,7 +396,11 @@ String.prototype.repeat = function(num) {
     this.infowindow.open(this.map, this.centerMarker);
 
     var centerControlDiv = document.createElement('div');
-    var centerControl = new CenterControl(centerControlDiv, this.map);
+    var centerControl = new CenterControl(centerControlDiv, this.map, '移動到臺北車站', function() {
+      this.centerMarker.setPosition(latlng);
+      this.centerCircle.setCenter(latlng);
+      this.map.panTo(latlng);
+    }.bind(this));
 
     centerControlDiv.index = 1;
     this.map.controls[google.maps.ControlPosition.LEFT_CENTER].push(centerControlDiv);
@@ -481,7 +485,7 @@ String.prototype.repeat = function(num) {
    * @param {[type]} controlDiv [description]
    * @param {[type]} map        [description]
    */
-  function CenterControl(controlDiv, map) {
+  function CenterControl(controlDiv, map, title, callback) {
 
     // Set CSS for the control border.
     this.controlUI = document.createElement('div');
@@ -492,7 +496,7 @@ String.prototype.repeat = function(num) {
     this.controlUI.style.cursor = 'pointer';
     this.controlUI.style.marginLeft = '10px';
     this.controlUI.style.textAlign = 'center';
-    this.controlUI.title = '顯示您的位置';
+    this.controlUI.title = title;
 
     // Set CSS for the control interior.
     this.controlText = document.createElement('div');
@@ -507,10 +511,7 @@ String.prototype.repeat = function(num) {
     controlDiv.appendChild(this.controlUI);
 
     // Setup the click event listeners.
-    this.controlUI.addEventListener('click', function() {
-      getCurrentLocation();
-    });
-
+    (callback && typeof(callback) === 'function') && this.controlUI.addEventListener('click', callback);
   }
 
   /**
@@ -535,33 +536,41 @@ String.prototype.repeat = function(num) {
   };
 
   GMap.clearMap = function(type) {
+    var cleanStops = function(argument) {
+      if (stopsAry) {
+        for (var i = stopsAry.length - 1; i >= 0; i--) {
+          stopsAry[i].setMap(null);
+        }
+        stopsAry.length = 0;
+      }
+    }
+    var cleanGeoJson = function(argument) {
+      busLayer.forEach(function(feature) {
+        busLayer.remove(feature);
+      });
+
+      traLayer.forEach(function(feature) {
+        traLayer.remove(feature);
+      });
+
+      mrtLayer.forEach(function(feature) {
+        mrtLayer.remove(feature);
+      });
+
+      ubikeLayer.forEach(function(feature) {
+        ubikeLayer.remove(feature);
+      });
+    }
     switch (type) {
       case 'Stop':
-        if (stopsAry) {
-          for (var i = stopsAry.length - 1; i >= 0; i--) {
-            stopsAry[i].setMap(null);
-          }
-          stopsAry.length = 0;
-        }
+        cleanStops();
         break;
       case 'GeoJson':
-        busLayer.forEach(function(feature) {
-          busLayer.remove(feature);
-        });
-
-        traLayer.forEach(function(feature) {
-          traLayer.remove(feature);
-        });
-
-        mrtLayer.forEach(function(feature) {
-          mrtLayer.remove(feature);
-        });
-
-        ubikeLayer.forEach(function(feature) {
-          ubikeLayer.remove(feature);
-        });
-
+        cleanGeoJson();
         break;
+      default:
+        cleanStops();
+        cleanGeoJson();
     }
   };
 
@@ -709,6 +718,17 @@ String.prototype.repeat = function(num) {
 
   var TripTaipeiService = {};
 
+  var showErrorMessage = function(argument) {
+    if (swal) {
+      swal({
+        title: 'Oops!',
+        text: '設定條件內無大眾運輸資料.',
+      });
+    } else {
+      window.alert('設定條件內無大眾運輸資料.');
+    }
+  };
+
   TripTaipeiService.getStops = function(state, callback) {
     return $.ajax({
       // url:'../data/stops.json',
@@ -718,10 +738,7 @@ String.prototype.repeat = function(num) {
       dataType: 'jsonp',
       success: function(response) {
         if (response.result === '0') {
-          swal({
-            title: 'Oops!',
-            text: '設定條件內無大眾運輸資料.',
-          });
+          showErrorMessage();
         }
         (callback && typeof(callback) === "function") && callback(response);
       },
@@ -755,10 +772,9 @@ String.prototype.repeat = function(num) {
       },
       success: function(response) {
         if (jQuery.isEmptyObject(response)) {
-          swal({
-            title: "Sorry!",
-            text: "設定條件內 無大眾運輸資料",
-          });
+          state.result.area = '0';
+          state.result.level = 'A';
+          return false;
         }
         state.result.area = response.result.BUSAREA;
         state.result.level = response.result.BUSSERVICE;
