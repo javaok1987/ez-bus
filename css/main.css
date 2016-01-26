@@ -120,11 +120,65 @@ body {
     list-style: none;
     text-indent: -40px; }
 
-#pageBlock .center-block {
-  top: 40%;
-  width: 200px; }
-  #pageBlock .center-block img {
-    vertical-align: text-bottom; }
+#pageBlock {
+  /*Location indicator */ }
+  #pageBlock .center-block {
+    top: 40%;
+    width: 100px;
+    height: 100px;
+    background-color: #3498db; }
+    #pageBlock .center-block img {
+      vertical-align: text-bottom; }
+  #pageBlock .location-indicator {
+    position: relative;
+    left: -9px;
+    margin: 0 auto; }
+  #pageBlock .location-indicator:before,
+  #pageBlock .location-indicator:after {
+    position: absolute;
+    content: ''; }
+  #pageBlock .location-indicator:before {
+    width: 20px;
+    height: 20px;
+    -webkit-transform: rotate(-46deg);
+    -moz-transform: rotate(-46deg);
+    transform: rotate(-46deg);
+    -webkit-animation: mapping .8s linear infinite;
+    -moz-animation: mapping .8s linear infinite;
+    animation: mapping .8s linear infinite;
+    border-radius: 100% 100% 100% 0;
+    box-shadow: 0 0 0 2px white; }
+  #pageBlock .location-indicator:after {
+    top: 30px;
+    left: 22px;
+    width: 30px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.2); }
+
+@-webkit-keyframes mapping {
+  0% {
+    top: 0; }
+  50% {
+    top: -5px; }
+  100% {
+    top: 0; } }
+
+@-moz-keyframes mapping {
+  0% {
+    top: 0; }
+  50% {
+    top: -5px; }
+  100% {
+    top: 0; } }
+
+@-keyframes mapping {
+  #pageBlock 0% {
+    top: 0; }
+  #pageBlock 50% {
+    top: -5px; }
+  #pageBlock 100% {
+    top: 0; } }
 
 /* End CSS Overlay */
 /* video */
