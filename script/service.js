@@ -1,97 +1,84 @@
 /*jshint browser: true, strict: true, undef: true */
 /*global define: false */
-(function(window, $) {
+(function (window, $) {
 
-  'use strict';
+  "use strict";
 
   var Urls = {
-    domain: 'http://demo.datarget.com.tw/TripTaipei'
-  };
+      domain: "http://demo.datarget.com.tw/TripTaipei"
+    },
+    TripTaipeiService = {};
 
-  Urls.getStops = Urls.domain + '/stops/getStops/#{lng}/#{lat}/#{distance}/#{type}';
-  Urls.getTripArea = Urls.domain + '/getTripArea/GeoJson';
+  Urls.getStops = Urls.domain + "/stops/getStops/#{lng}/#{lat}/#{distance}/#{type}";
+  Urls.getTripArea = Urls.domain + "/getTripArea/GeoJson";
 
-  var TripTaipeiService = {};
-
-  function showErrorMessage(argument) {
-    if (swal) {
+  function showErrorMessage() {
+    if (typeof swal === "function") {
       swal({
-        title: 'Oops!',
-        text: '設定條件內無大眾運輸資料.',
+        title: "Oops!",
+        text: "設定條件內無大眾運輸資料."
       });
     } else {
-      window.alert('設定條件內無大眾運輸資料.');
+      window.alert("設定條件內無大眾運輸資料.");
     }
   }
 
-  TripTaipeiService.getStops = function(state, callback) {
+  TripTaipeiService.getStops = function (state, callback) {
     return $.ajax({
-      // url:'../data/stops.json',
-      // dataType: 'json',
-      url: Urls.getStops.replace('#{lng}', state.longitude).replace('#{lat}', state.latitude).replace('#{distance}', state.walkDistance).replace('#{type}', state.transitType),
-      jsonp: 'callback',
-      dataType: 'jsonp',
-      success: function(response) {
-        if (response.result === '0') {
+      // url:"../data/stops.json",
+      // dataType: "json",
+      url: Urls.getStops.replace("#{lng}", state.longitude).replace("#{lat}", state.latitude).replace("#{distance}", state.walkDistance).replace("#{type}", state.transitType),
+      jsonp: "callback",
+      dataType: "jsonp",
+      success: function (response) {
+        if (response.result === "0") {
           showErrorMessage();
         }
-        (callback && typeof(callback) === "function") && callback(response, state.transitType);
+        (callback && typeof (callback) === "function") && callback(response, state.transitType);
       },
-      error: function(error) {
+      error: function (error) {
         console.error(error);
       }
     });
   };
 
-  TripTaipeiService.getTripArea = function(state, callback) {
+  TripTaipeiService.getTripArea = function (data, beforeSend, complete, callback) {
     return $.ajax({
-      // url:'../data/tripArea.json',
-      // dataType: 'json',
+      // url:"../data/tripArea.json",
+      // dataType: "json",
       url: Urls.getTripArea,
-      jsonp: 'callback',
-      dataType: 'jsonp',
+      jsonp: "callback",
+      dataType: "jsonp",
       data: {
-        lat: state.latitude,
-        lng: state.longitude,
-        walkDistance: state.walkDistance,
-        tripTime: state.tripTime,
-        weekType: state.weekType,
-        startTime: state.startTime,
-        transitType: state.transitType
+        lat: data.latitude,
+        lng: data.longitude,
+        walkDistance: data.walkDistance,
+        tripTime: data.tripTime,
+        weekType: data.weekType,
+        startTime: data.startTime,
+        transitType: data.transitType
       },
-      beforeSend: function(xhr) {
-        classie.removeClass(document.getElementById('pageBlock'), 'hidden');
+      beforeSend: beforeSend,
+      complete: complete,
+      success: function (response) {
+        (callback && typeof (callback) === "function") && callback(response);
       },
-      complete: function() {
-        classie.addClass(document.getElementById('pageBlock'), 'hidden');
-      },
-      success: function(response) {
-        if (jQuery.isEmptyObject(response)) {
-          state.result.area = '0';
-          state.result.level = 'A';
-          return false;
-        }
-        state.result.area = response.result.BUSAREA;
-        state.result.level = response.result.BUSSERVICE;
-        (callback && typeof(callback) === "function") && callback(response);
-      },
-      error: function(error) {
+      error: function (error) {
         console.error(error);
       }
     });
   };
 
-  TripTaipeiService.query = function(state, callback) {
-    console.log(state);
-    var stopsAjax = this.getStops(state, GMap.addStops);
-    var tripAreaAjax = this.getTripArea(state, GMap.addGeoJson);
-    $.when.apply($, [stopsAjax, tripAreaAjax]).then(function() {
-      (callback && typeof(callback) === "function") && callback();
+  TripTaipeiService.query = function (data, beforeSend, complete, callback) {
+    var stopsAjax = this.getStops(data, GMap.addStops),
+      tripAreaAjax = this.getTripArea(data, beforeSend, complete, GMap.addGeoJson);
+    jQuery.when.apply($, [stopsAjax, tripAreaAjax]).then(function () {
+      (callback && typeof (callback) === "function") && callback(tripAreaAjax.responseJSON.result.BUSAREA, tripAreaAjax.responseJSON.result.BUSSERVICE);
     });
   };
 
   // transport
-  if (typeof define === 'function' && define.amd) {
+  if (typeof define === "function" && define.amd) {
     // AMD
     define(TripTaipeiService);
   } else {
@@ -99,4 +86,4 @@
     window.TripTaipeiService = TripTaipeiService;
   }
 
-})(window, jQuery);
+}(window, jQuery));

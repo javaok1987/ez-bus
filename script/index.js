@@ -1,76 +1,111 @@
-'use strict';
+if (window.MYAPP === undefined) {
+  window.MYAPP = {};
+}
 
-(function($) {
+MYAPP.alert = function (title, text) {
+  "use strict";
+  if (typeof swal === "function") {
+    swal({
+      title: title,
+      text: (text === undefined) ? "" : text
+    });
+  } else {
+    window.alert(title);
+  }
+};
 
-  var $slider = $('#slider'),
-    $walkSlider = $('#walk-slider');
+(function ($) {
 
-  var $conveyance = $('#article-conveyance'),
-    $wrapper = $('#wrapper');
+  "use strict";
 
-  var state = {
-    walkDistance: 600,
-    tripTime: 30,
-    startTime: '0800',
-    weekType: 1,
-    transitType: 'BYTM',
-    result: {
-      area: '0',
-      level: 'A'
+  var $app = $("#wrapper"),
+    state = {
+      walkDistance: 600,
+      tripTime: 30,
+      startTime: "0800",
+      weekType: 1,
+      transitType: "BYTM"
+    };
+
+  function pauseVideo() {
+    var vid = document.getElementById("bgvid");
+    vid.pause();
+    vid.addEventListener("ended", function () {
+      // only functional if "loop" is removed
+      vid.pause();
+      // to capture IE10
+      vid.classList.add("stopfade");
+    });
+  }
+
+  function query() {
+    console.log(state);
+    if (state.transitType.length > 0) {
+      TripTaipeiService.query(state, function () {
+        $app.find("#pageBlock").removeClass("hidden");
+      }, function () {
+        $app.find("#pageBlock").addClass("hidden");
+      }, function (area, service) {
+        $app.find("#bus-area").text(area || "0");
+        $app.find("#bus-service").text(service || "A");
+      });
+    } else {
+      MYAPP.alert("請至少選擇一種交通工具");
+      GMap.clearMap();
     }
-  };
+  }
 
-  $(function($) {
+  $(function ($) {
 
-    classie.removeClass(document.getElementById('wrapper'), 'hidden');
+    $app.removeClass("hidden");
     FastClick.attach(document.body);
 
-    window.alert = swal;
+    var FlatUI = new MYAPP.FlatUI('#sidebar-wrapper');
 
-    $('.iui-overlay').find('button').on('click', function() {
+    $(".iui-overlay").find("button").on("click", function () {
 
       pauseVideo();
 
-      GMap.initialize(function() {
-
-        $(window).resize(function(argument) {
-          google.maps.event.trigger(GMap.map, 'resize');
+      GMap.initialize(function () {
+        console.log('initialize');
+        $(window).resize(function () {
+          google.maps.event.trigger(GMap.map, "resize");
         });
 
-        google.maps.event.addListenerOnce(GMap.map, 'idle', function() {
+        google.maps.event.addListenerOnce(GMap.map, "idle", function () {
           state.latitude = GMap.centerMarker.getPosition().lat();
           state.longitude = GMap.centerMarker.getPosition().lng();
         });
 
-        google.maps.event.addListenerOnce(GMap.map, 'idle', function() {
-          $('#overlay').slideUp('slow');
-          classie.removeClass(document.getElementById('businfo-panal'), 'hidden');
-          classie.removeClass(document.getElementById('menu-toggle'), 'hidden');
+        google.maps.event.addListenerOnce(GMap.map, "idle", function () {
+          $app.find("#overlay").slideUp("slow");
+          $app.find("#businfo-panal").removeClass("hidden");
+          $app.find("#menu-toggle").removeClass("hidden");
         });
 
-        google.maps.event.addListener(GMap.centerMarker, 'dragend', function(event) {
+        google.maps.event.addListener(GMap.centerMarker, "dragend", function () {
           state.latitude = GMap.centerMarker.getPosition().lat();
           state.longitude = GMap.centerMarker.getPosition().lng();
           query();
         });
 
-        var weekly = $('#weekly').find('.btn').on('click', function() {
-          state.weekType = $(this).data('index');
+        var weekly = FlatUI.$panel.find("#weekly .btn").on("click", function () {
+          state.weekType = $(this).data("index");
           query();
         });
         state.weekType = new Date().getDay();
-        $(weekly[state.weekType - 1]).addClass('active'); //設定星期別.
+        $(weekly[state.weekType - 1]).addClass("active"); //設定星期別.
 
-        $walkSlider.on('slidestop', function(event, ui) {
-          state.walkDistance = $walkSlider.find('.ui-slider-value:last').data('slidervalue');
+        FlatUI.$panel.find("#slider-walk").on("slidestop", function () {
+          state.walkDistance = $(this).find(".ui-slider-value:last").data("slidervalue");
           GMap.centerCircle.setOptions({
             radius: state.walkDistance
           });
           query();
         });
 
-        $slider.on('slidestop', function(event, ui) {
-          state.tripTime = $slider.find('.ui-slider-value:last').data('slidervalue');
+        FlatUI.$panel.find("#slider-trip-time").on("slidestop", function () {
+          state.tripTime = $(this).find(".ui-slider-value:last").data("slidervalue");
           query();
         });
 
@@ -78,71 +113,42 @@
 
     });
 
-    $wrapper.find('#article-conveyance [data-toggle="switch"]').on('switchChange.bootstrapSwitch', function(event, checked) {
-      var $switch = $(event.target);
-      var _transitType = state.transitType;
-      if (checked && _transitType.indexOf($switch.val()) === -1) {
-        _transitType += $switch.val();
+    FlatUI.$panel.find('#article-conveyance [data-toggle="switch"]').on("switchChange.bootstrapSwitch", function (event, checked) {
+      var $switch = $(event.target),
+        transitType = state.transitType;
+      if (checked && transitType.indexOf($switch.val()) === -1) {
+        transitType += $switch.val();
       } else {
-        _transitType = _transitType.replace($switch.val(), '');
+        transitType = transitType.replace($switch.val(), "");
       }
-      state.transitType = _transitType;
+      state.transitType = transitType;
       query();
     });
 
-    // Closes the sidebar menu
-    $('#menu-close').click(function(e) {
-      e.preventDefault();
-      $('#sidebar-wrapper').toggleClass('active');
-    });
-
-    // Opens the sidebar menu
-    $('#menu-toggle').click(function(e) {
-      e.preventDefault();
-      $('#sidebar-wrapper').toggleClass('active');
-    });
-
-    $('#timepicker').timepicker({
-      defaultTime: '08:00 AM',
+    FlatUI.$panel.find("#timepicker").timepicker({
+      defaultTime: "08:00 AM",
       disableFocus: false,
       showMeridian: false
-    }).on('hide.timepicker', function(e) {
-      var _selectTime = e.time.value;
+    }).on("hide.timepicker", function (e) {
+      var selectTime = e.time.value;
       if (e.time.hours < 10) {
-        _selectTime = '0' + _selectTime;
+        selectTime = "0" + selectTime;
       }
-      state.startTime = _selectTime.replace(':', '');
+      state.startTime = selectTime.replace(":", "");
       query();
     });
 
-    // $('.iui-overlay').find('button').click(); //test code;
-    // $('#menu-toggle').click(); //test code;
+    // Toggle the sidebar menu
+    $app.find("#menu-toggle, #menu-close").click(function (e) {
+      e.preventDefault();
+      $app.find("#sidebar-wrapper").toggleClass("active");
+    });
+
+    // $app.find(".iui-overlay").find("button").click(); //test code;
+    // $app.find("#menu-toggle").click(); //test code;
 
   });
 
-  function setQueryResult() {
-    $('#service-area').text(state.result.area);
-    $('#service-level').text(state.result.level);
-  }
 
-  function pauseVideo() {
-    var vid = document.getElementById('bgvid');
-    vid.pause();
-    vid.addEventListener('ended', function() {
-      // only functional if "loop" is removed
-      vid.pause();
-      // to capture IE10
-      vid.classList.add('stopfade');
-    });
-  }
 
-  function query() {
-    if (state.transitType.length > 0) {
-      TripTaipeiService.query(state, setQueryResult);
-    } else {
-      window.alert('請至少選擇一種交通工具');
-      GMap.clearMap();
-    }
-  }
-
-})(jQuery);
+}(jQuery));
