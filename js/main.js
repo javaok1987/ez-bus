@@ -194,7 +194,7 @@ MYAPP.alert = function (title, text) {
       pauseVideo();
 
       GMap.initialize(function () {
-        console.log('initialize');
+        console.log('map init...');
         $(window).resize(function () {
           google.maps.event.trigger(GMap.map, "resize");
         });
