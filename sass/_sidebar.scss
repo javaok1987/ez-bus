@@ -35,6 +35,8 @@
     width: $panel-width;
     height: 100%;
     padding-bottom: 80px;
+
+    will-change: transform;
     .items
     {
         width: 100%;

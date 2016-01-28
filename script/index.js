@@ -55,6 +55,19 @@ MYAPP.alert = function (title, text) {
     }
   }
 
+  // debounce event function
+  function debounce(fn, delay) {
+    var timer = null;
+    return function () {
+      var context = this,
+        args = arguments;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
+
   $(function ($) {
 
     $app.removeClass("hidden");
@@ -62,7 +75,7 @@ MYAPP.alert = function (title, text) {
 
     var FlatUI = new MYAPP.FlatUI('#sidebar-wrapper');
 
-    $(".iui-overlay").find("button").on("click", function () {
+    $(".iui-overlay").find("button").on("click", debounce(function () {
 
       pauseVideo();
 
@@ -89,28 +102,28 @@ MYAPP.alert = function (title, text) {
           query();
         });
 
-        var weekly = FlatUI.$panel.find("#weekly .btn").on("click", function () {
-          state.weekType = $(this).data("index");
-          query();
-        });
-        state.weekType = new Date().getDay();
-        $(weekly[state.weekType - 1]).addClass("active"); //設定星期別.
-
-        FlatUI.$panel.find("#slider-walk").on("slidestop", function () {
-          state.walkDistance = $(this).find(".ui-slider-value:last").data("slidervalue");
-          GMap.centerCircle.setOptions({
-            radius: state.walkDistance
-          });
-          query();
-        });
-
-        FlatUI.$panel.find("#slider-trip-time").on("slidestop", function () {
-          state.tripTime = $(this).find(".ui-slider-value:last").data("slidervalue");
-          query();
-        });
-
       });
 
+    }, 10));
+
+    var weekly = FlatUI.$panel.find("#weekly .btn").on("click", function () {
+      state.weekType = $(this).data("index");
+      query();
+    });
+    state.weekType = new Date().getDay();
+    $(weekly[state.weekType - 1]).addClass("active"); //設定星期別.
+
+    FlatUI.$panel.find("#slider-walk").on("slidestop", function () {
+      state.walkDistance = $(this).find(".ui-slider-value:last").data("slidervalue");
+      GMap.centerCircle.setOptions({
+        radius: state.walkDistance
+      });
+      query();
+    });
+
+    FlatUI.$panel.find("#slider-trip-time").on("slidestop", function () {
+      state.tripTime = $(this).find(".ui-slider-value:last").data("slidervalue");
+      query();
     });
 
     FlatUI.$panel.find('#article-conveyance [data-toggle="switch"]').on("switchChange.bootstrapSwitch", function (event, checked) {
