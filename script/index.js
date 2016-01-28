@@ -25,7 +25,8 @@ MYAPP.alert = function (title, text) {
       startTime: "0800",
       weekType: 1,
       transitType: "BYTM"
-    };
+    },
+    weekly;
 
   function pauseVideo() {
     var vid = document.getElementById("bgvid");
@@ -80,7 +81,6 @@ MYAPP.alert = function (title, text) {
       pauseVideo();
 
       GMap.initialize(function () {
-        console.log('initialize');
         $(window).resize(function () {
           google.maps.event.trigger(GMap.map, "resize");
         });
@@ -106,7 +106,7 @@ MYAPP.alert = function (title, text) {
 
     }, 10));
 
-    var weekly = FlatUI.$panel.find("#weekly .btn").on("click", function () {
+    weekly = FlatUI.$panel.find("#weekly .btn").on("click", function () {
       state.weekType = $(this).data("index");
       query();
     });
