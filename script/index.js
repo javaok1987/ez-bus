@@ -91,9 +91,11 @@ MYAPP.alert = function (title, text) {
         });
 
         google.maps.event.addListenerOnce(GMap.map, "idle", function () {
-          $app.find("#overlay").slideUp("slow");
-          $app.find("#businfo-panal").removeClass("hidden");
-          $app.find("#menu-toggle").removeClass("hidden");
+          $app.find("#overlay").slideUp("slow", function () {
+            $app.find("#businfo-panal").removeClass("hidden");
+            $app.find("#menu-toggle").removeClass("hidden");
+            $app.find("#sidebar-wrapper").toggleClass("active");
+          });
         });
 
         google.maps.event.addListener(GMap.centerMarker, "dragend", function () {
