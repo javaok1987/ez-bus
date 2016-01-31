@@ -226,7 +226,8 @@ MYAPP.alert = function (title, text) {
       state.weekType = $(this).data("index");
       query();
     });
-    state.weekType = new Date().getDay();
+    weekly.weekIndex = new Date().getDay();
+    state.weekType = weekly.weekIndex===0?7:weekly.weekIndex;
     $(weekly[state.weekType - 1]).addClass("active"); //設定星期別.
 
     FlatUI.$panel.find("#slider-walk").on("slidestop", function () {
