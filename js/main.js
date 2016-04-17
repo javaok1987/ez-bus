@@ -668,11 +668,11 @@ MYAPP.alert = function (title, text) {
 
   TripTaipeiService.getStops = function (state, callback) {
     return $.ajax({
-      // url:"../data/stops.json",
-      // dataType: "json",
-      url: Urls.getStops.replace("#{lng}", state.longitude).replace("#{lat}", state.latitude).replace("#{distance}", state.walkDistance).replace("#{type}", state.transitType),
-      jsonp: "callback",
-      dataType: "jsonp",
+      url:"../data/stops.json",
+      dataType: "json",
+      // url: Urls.getStops.replace("#{lng}", state.longitude).replace("#{lat}", state.latitude).replace("#{distance}", state.walkDistance).replace("#{type}", state.transitType),
+      // jsonp: "callback",
+      // dataType: "jsonp",
       success: function (response) {
         if (response.result === "0") {
           showErrorMessage();
@@ -687,11 +687,11 @@ MYAPP.alert = function (title, text) {
 
   TripTaipeiService.getTripArea = function (data, beforeSend, complete, callback) {
     return $.ajax({
-      // url:"../data/tripArea.json",
-      // dataType: "json",
-      url: Urls.getTripArea,
-      jsonp: "callback",
-      dataType: "jsonp",
+      url:"../data/tripArea.json",
+      dataType: "json",
+      // url: Urls.getTripArea,
+      // jsonp: "callback",
+      // dataType: "jsonp",
       data: {
         lat: data.latitude,
         lng: data.longitude,
