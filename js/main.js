@@ -668,7 +668,7 @@ MYAPP.alert = function (title, text) {
 
   TripTaipeiService.getStops = function (state, callback) {
     return $.ajax({
-      url:"../data/stops.json",
+      url:"./data/stops.json",
       dataType: "json",
       // url: Urls.getStops.replace("#{lng}", state.longitude).replace("#{lat}", state.latitude).replace("#{distance}", state.walkDistance).replace("#{type}", state.transitType),
       // jsonp: "callback",
@@ -687,7 +687,7 @@ MYAPP.alert = function (title, text) {
 
   TripTaipeiService.getTripArea = function (data, beforeSend, complete, callback) {
     return $.ajax({
-      url:"../data/tripArea.json",
+      url:"./data/tripArea.json",
       dataType: "json",
       // url: Urls.getTripArea,
       // jsonp: "callback",
